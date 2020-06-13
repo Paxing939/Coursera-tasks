@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ilya/CLionProjects/Coursera/YellowBelt/BaseOfRegions.cpp
+iostream
+-
+string
+-
+map
+-
+vector
+-
+algorithm
+-
+
