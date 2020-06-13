@@ -44,10 +44,10 @@ RM = /home/ilya/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/201.7223.86/bin/c
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ilya/CLionProjects/YellowBelt
+CMAKE_SOURCE_DIR = /home/ilya/CLionProjects/Coursera/YellowBelt
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ilya/CLionProjects/YellowBelt/cmake-build-debug
+CMAKE_BINARY_DIR = /home/ilya/CLionProjects/Coursera/YellowBelt/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -74,14 +74,14 @@ clean: CMakeFiles/YellowBelt.dir/clean
 CMakeFiles/YellowBelt.dir/all:
 	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/depend
 	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ilya/CLionProjects/YellowBelt/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target YellowBelt"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ilya/CLionProjects/Coursera/YellowBelt/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target YellowBelt"
 .PHONY : CMakeFiles/YellowBelt.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/YellowBelt.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ilya/CLionProjects/YellowBelt/cmake-build-debug/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ilya/CLionProjects/Coursera/YellowBelt/cmake-build-debug/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/YellowBelt.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ilya/CLionProjects/YellowBelt/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ilya/CLionProjects/Coursera/YellowBelt/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/YellowBelt.dir/rule
 
 # Convenience name for target.
