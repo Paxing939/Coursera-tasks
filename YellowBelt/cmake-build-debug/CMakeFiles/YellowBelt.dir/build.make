@@ -57,27 +57,27 @@ include CMakeFiles/YellowBelt.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/YellowBelt.dir/flags.make
 
-CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.o: CMakeFiles/YellowBelt.dir/flags.make
-CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.o: ../BaseOfRegions.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ilya/CLionProjects/Coursera/YellowBelt/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.o -c /home/ilya/CLionProjects/Coursera/YellowBelt/BaseOfRegions.cpp
+CMakeFiles/YellowBelt.dir/TaskStatus.cpp.o: CMakeFiles/YellowBelt.dir/flags.make
+CMakeFiles/YellowBelt.dir/TaskStatus.cpp.o: ../TaskStatus.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ilya/CLionProjects/Coursera/YellowBelt/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/YellowBelt.dir/TaskStatus.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/YellowBelt.dir/TaskStatus.cpp.o -c /home/ilya/CLionProjects/Coursera/YellowBelt/TaskStatus.cpp
 
-CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ilya/CLionProjects/Coursera/YellowBelt/BaseOfRegions.cpp > CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.i
+CMakeFiles/YellowBelt.dir/TaskStatus.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/YellowBelt.dir/TaskStatus.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ilya/CLionProjects/Coursera/YellowBelt/TaskStatus.cpp > CMakeFiles/YellowBelt.dir/TaskStatus.cpp.i
 
-CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ilya/CLionProjects/Coursera/YellowBelt/BaseOfRegions.cpp -o CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.s
+CMakeFiles/YellowBelt.dir/TaskStatus.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/YellowBelt.dir/TaskStatus.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ilya/CLionProjects/Coursera/YellowBelt/TaskStatus.cpp -o CMakeFiles/YellowBelt.dir/TaskStatus.cpp.s
 
 # Object files for target YellowBelt
 YellowBelt_OBJECTS = \
-"CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.o"
+"CMakeFiles/YellowBelt.dir/TaskStatus.cpp.o"
 
 # External object files for target YellowBelt
 YellowBelt_EXTERNAL_OBJECTS =
 
-YellowBelt: CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.o
+YellowBelt: CMakeFiles/YellowBelt.dir/TaskStatus.cpp.o
 YellowBelt: CMakeFiles/YellowBelt.dir/build.make
 YellowBelt: CMakeFiles/YellowBelt.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ilya/CLionProjects/Coursera/YellowBelt/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable YellowBelt"

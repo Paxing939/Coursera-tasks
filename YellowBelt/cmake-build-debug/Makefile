@@ -123,32 +123,32 @@ YellowBelt/fast:
 	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/build
 .PHONY : YellowBelt/fast
 
-BaseOfRegions.o: BaseOfRegions.cpp.o
+TaskStatus.o: TaskStatus.cpp.o
 
-.PHONY : BaseOfRegions.o
+.PHONY : TaskStatus.o
 
 # target to build an object file
-BaseOfRegions.cpp.o:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.o
-.PHONY : BaseOfRegions.cpp.o
+TaskStatus.cpp.o:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TaskStatus.cpp.o
+.PHONY : TaskStatus.cpp.o
 
-BaseOfRegions.i: BaseOfRegions.cpp.i
+TaskStatus.i: TaskStatus.cpp.i
 
-.PHONY : BaseOfRegions.i
+.PHONY : TaskStatus.i
 
 # target to preprocess a source file
-BaseOfRegions.cpp.i:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.i
-.PHONY : BaseOfRegions.cpp.i
+TaskStatus.cpp.i:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TaskStatus.cpp.i
+.PHONY : TaskStatus.cpp.i
 
-BaseOfRegions.s: BaseOfRegions.cpp.s
+TaskStatus.s: TaskStatus.cpp.s
 
-.PHONY : BaseOfRegions.s
+.PHONY : TaskStatus.s
 
 # target to generate assembly for a file
-BaseOfRegions.cpp.s:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/BaseOfRegions.cpp.s
-.PHONY : BaseOfRegions.cpp.s
+TaskStatus.cpp.s:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TaskStatus.cpp.s
+.PHONY : TaskStatus.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... YellowBelt"
-	@echo "... BaseOfRegions.o"
-	@echo "... BaseOfRegions.i"
-	@echo "... BaseOfRegions.s"
+	@echo "... TaskStatus.o"
+	@echo "... TaskStatus.i"
+	@echo "... TaskStatus.s"
 .PHONY : help
 
 

@@ -6,15 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/ilya/CLionProjects/Coursera/YellowBelt/BaseOfRegions.cpp
+/home/ilya/CLionProjects/Coursera/YellowBelt/TaskStatus.cpp
 iostream
 -
 string
 -
 map
--
-vector
--
-algorithm
 -
 
