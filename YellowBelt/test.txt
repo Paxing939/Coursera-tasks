@@ -4,3 +4,40 @@ Updated Ivan's tasks: 0 new tasks, 2 tasks in progress, 0 tasks are being tested
 Untouched Ivan's tasks: 1 new tasks, 0 tasks in progress, 0 tasks are being tested, 0 tasks are done
 Updated Ivan's tasks: 0 new tasks, 1 tasks in progress, 1 tasks are being tested, 0 tasks are done
 Untouched Ivan's tasks: 0 new tasks, 1 tasks in progress, 0 tasks are being tested, 0 tasks are done
+
+Failed case #1/102: (Wrong answer)
+Неправильный результат в 7 строке
+
+Input:
+AddNewTasks Alice 5
+PerformPersonTasks Alice 5
+PerformPersonTasks Alice 5
+PerformPersonTasks Alice 1
+AddNewTasks Alice 5
+PerformPersonTasks Alice 2
+GetPersonTasksInfo Alice
+PerformPersonTasks Alice 4
+GetPersonTasksInfo Alice
+
+Your output:
+[]
+[{"IN_PROGRESS": 5}, {}]
+[{"TESTING": 5}, {}]
+[{"DONE": 1}, {"TESTING": 4}]
+[]
+[{"IN_PROGRESS": 2}, {"NEW": 3, "TESTING": 4}]
+{"NEW": 3, "IN_PROGRESS": 2, "TESTING": 4, "DONE": 1}
+[{"IN_PROGRESS": 3, "TESTING": 1, "DONE": 1}, {"IN_PROGRESS": 1, "TESTING": 3, "DONE": 1}]
+{"IN_PROGRESS": 4, "TESTING": 4, "DONE": 2}
+
+Correct output:
+[]
+[{"IN_PROGRESS": 5}, {}]
+[{"TESTING": 5}, {}]
+[{"DONE": 1}, {"TESTING": 4}]
+[]
+[{"IN_PROGRESS": 2}, {"NEW": 3, "TESTING": 4}]
+{"NEW": 3, "IN_PROGRESS": 2, "TESTING": 4, "DONE": 1}
+[{"IN_PROGRESS": 3, "TESTING": 1}, {"IN_PROGRESS": 1, "TESTING": 4}]
+{"IN_PROGRESS": 4, "TESTING": 5, "DONE": 1}
+ (Time used: 0.00/1.00, preprocess time used: 0/None, memory used: 45383680/536870912.)
