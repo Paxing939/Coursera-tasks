@@ -6,9 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/ilya/CLionProjects/Coursera/YellowBelt/ReferenceToElement.cpp
+/home/ilya/CLionProjects/Coursera/YellowBelt/Sqr.cpp
 iostream
 -
+vector
+-
 map
+-
+utility
+-
+string
 -
 

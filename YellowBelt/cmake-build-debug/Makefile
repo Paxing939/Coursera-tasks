@@ -123,32 +123,32 @@ YellowBelt/fast:
 	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/build
 .PHONY : YellowBelt/fast
 
-ReferenceToElement.o: ReferenceToElement.cpp.o
+Sqr.o: Sqr.cpp.o
 
-.PHONY : ReferenceToElement.o
+.PHONY : Sqr.o
 
 # target to build an object file
-ReferenceToElement.cpp.o:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/ReferenceToElement.cpp.o
-.PHONY : ReferenceToElement.cpp.o
+Sqr.cpp.o:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/Sqr.cpp.o
+.PHONY : Sqr.cpp.o
 
-ReferenceToElement.i: ReferenceToElement.cpp.i
+Sqr.i: Sqr.cpp.i
 
-.PHONY : ReferenceToElement.i
+.PHONY : Sqr.i
 
 # target to preprocess a source file
-ReferenceToElement.cpp.i:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/ReferenceToElement.cpp.i
-.PHONY : ReferenceToElement.cpp.i
+Sqr.cpp.i:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/Sqr.cpp.i
+.PHONY : Sqr.cpp.i
 
-ReferenceToElement.s: ReferenceToElement.cpp.s
+Sqr.s: Sqr.cpp.s
 
-.PHONY : ReferenceToElement.s
+.PHONY : Sqr.s
 
 # target to generate assembly for a file
-ReferenceToElement.cpp.s:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/ReferenceToElement.cpp.s
-.PHONY : ReferenceToElement.cpp.s
+Sqr.cpp.s:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/Sqr.cpp.s
+.PHONY : Sqr.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... YellowBelt"
-	@echo "... ReferenceToElement.o"
-	@echo "... ReferenceToElement.i"
-	@echo "... ReferenceToElement.s"
+	@echo "... Sqr.o"
+	@echo "... Sqr.i"
+	@echo "... Sqr.s"
 .PHONY : help
 
 
