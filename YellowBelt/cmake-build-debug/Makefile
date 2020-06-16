@@ -123,32 +123,32 @@ YellowBelt/fast:
 	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/build
 .PHONY : YellowBelt/fast
 
-TaskStatus.o: TaskStatus.cpp.o
+ReferenceToElement.o: ReferenceToElement.cpp.o
 
-.PHONY : TaskStatus.o
+.PHONY : ReferenceToElement.o
 
 # target to build an object file
-TaskStatus.cpp.o:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TaskStatus.cpp.o
-.PHONY : TaskStatus.cpp.o
+ReferenceToElement.cpp.o:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/ReferenceToElement.cpp.o
+.PHONY : ReferenceToElement.cpp.o
 
-TaskStatus.i: TaskStatus.cpp.i
+ReferenceToElement.i: ReferenceToElement.cpp.i
 
-.PHONY : TaskStatus.i
+.PHONY : ReferenceToElement.i
 
 # target to preprocess a source file
-TaskStatus.cpp.i:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TaskStatus.cpp.i
-.PHONY : TaskStatus.cpp.i
+ReferenceToElement.cpp.i:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/ReferenceToElement.cpp.i
+.PHONY : ReferenceToElement.cpp.i
 
-TaskStatus.s: TaskStatus.cpp.s
+ReferenceToElement.s: ReferenceToElement.cpp.s
 
-.PHONY : TaskStatus.s
+.PHONY : ReferenceToElement.s
 
 # target to generate assembly for a file
-TaskStatus.cpp.s:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TaskStatus.cpp.s
-.PHONY : TaskStatus.cpp.s
+ReferenceToElement.cpp.s:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/ReferenceToElement.cpp.s
+.PHONY : ReferenceToElement.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... YellowBelt"
-	@echo "... TaskStatus.o"
-	@echo "... TaskStatus.i"
-	@echo "... TaskStatus.s"
+	@echo "... ReferenceToElement.o"
+	@echo "... ReferenceToElement.i"
+	@echo "... ReferenceToElement.s"
 .PHONY : help
 
 

@@ -1,7 +1,3 @@
-//
-// Created by ilya on 14.06.20.
-//
-
 #include <iostream>
 #include <string>
 #include <map>
@@ -71,109 +67,13 @@ public:
 
   // Обновить статусы по данному количеству задач конкретного разработчика,
   // подробности см. ниже
-//  tuple<TasksInfo, TasksInfo> PerformPersonTasks(const string &person, int task_count) {
-//    if (staff.count(person) < 1) {
-//      return {{}, {}};
-//    }
-//
-//    int updated_tasks_amount;
-//    TasksInfo new_tasks, old_tasks;
-//    if (task_count >= staff[person][TaskStatus::NEW]) {
-//      updated_tasks_amount = staff[person][TaskStatus::NEW];
-//      task_count -= staff[person][TaskStatus::NEW];
-//      staff[person][TaskStatus::NEW] = 0;
-//    } else {
-//      updated_tasks_amount = task_count;
-//      staff[person][TaskStatus::NEW] -= task_count;
-//      task_count = 0;
-//      old_tasks[TaskStatus::NEW] = staff[person][TaskStatus::NEW];
-//    }
-//
-//    if (task_count == 0) {
-//      old_tasks[TaskStatus::IN_PROGRESS] = staff[person][TaskStatus::IN_PROGRESS];
-//      staff[person][TaskStatus::IN_PROGRESS] += updated_tasks_amount;
-//      new_tasks[TaskStatus::IN_PROGRESS] = updated_tasks_amount;
-//      if (staff[person].count(TaskStatus::TESTING) > 0) {
-//        old_tasks[TaskStatus::TESTING] = staff[person][TaskStatus::TESTING];
-//      }
-//      CleanMaps(new_tasks, old_tasks, person);
-//      return tie(new_tasks, old_tasks);
-//    }
-//    if (task_count >= staff[person][TaskStatus::IN_PROGRESS]) {
-//      task_count -= staff[person][TaskStatus::IN_PROGRESS];
-//      int tmp = staff[person][TaskStatus::IN_PROGRESS];
-//      new_tasks[TaskStatus::IN_PROGRESS] = updated_tasks_amount;
-//      staff[person][TaskStatus::IN_PROGRESS] = updated_tasks_amount;
-//      updated_tasks_amount = tmp;
-//    } else {
-//      staff[person][TaskStatus::IN_PROGRESS] -= task_count;
-//      old_tasks[TaskStatus::IN_PROGRESS] = staff[person][TaskStatus::IN_PROGRESS];
-//      staff[person][TaskStatus::IN_PROGRESS] += updated_tasks_amount;
-//      new_tasks[TaskStatus::IN_PROGRESS] = updated_tasks_amount;
-//      updated_tasks_amount = task_count;
-//      task_count = 0;
-//    }
-//
-//    if (task_count == 0) {
-//      old_tasks[TaskStatus::TESTING] = staff[person][TaskStatus::TESTING];
-//      staff[person][TaskStatus::TESTING] += updated_tasks_amount;
-//      new_tasks[TaskStatus::TESTING] = updated_tasks_amount;
-//      CleanMaps(new_tasks, old_tasks, person);
-//      return tie(new_tasks, old_tasks);
-//    }
-//    if (task_count >= staff[person][TaskStatus::TESTING]) {
-//      task_count -= staff[person][TaskStatus::TESTING];
-//      int tmp = staff[person][TaskStatus::TESTING];
-//      new_tasks[TaskStatus::TESTING] = updated_tasks_amount;
-//      staff[person][TaskStatus::TESTING] = updated_tasks_amount;
-//      updated_tasks_amount = tmp;
-//    } else {
-//      staff[person][TaskStatus::TESTING] -= task_count;
-//      old_tasks[TaskStatus::TESTING] = staff[person][TaskStatus::TESTING];
-//      staff[person][TaskStatus::TESTING] += updated_tasks_amount;
-//      new_tasks[TaskStatus::TESTING] = updated_tasks_amount;
-//      updated_tasks_amount = task_count;
-//      task_count = 0;
-//    }
-//
-//    old_tasks[TaskStatus::DONE] = staff[person][TaskStatus::DONE];
-//    staff[person][TaskStatus::DONE] += updated_tasks_amount;
-//    new_tasks[TaskStatus::DONE] = updated_tasks_amount;
-//
-//    CleanMaps(new_tasks, old_tasks, person);
-//
-////    for (auto &[key, value] : staff[person]) {
-////      if (task_count == 0 && updated_tasks_amount == 0) {
-////        break;
-////      }
-////      if (task_count > value) {
-////        task_count -= value;
-////        int tmp = value;
-////        new_tasks[key] = value = updated_tasks_amount;
-////        updated_tasks_amount = tmp;
-////      } else {
-////        value -= task_count;
-////        if (value != 0) {
-////          old_tasks[key] = value;
-////        }
-////        value += updated_tasks_amount;
-////        new_tasks[key] = updated_tasks_amount;
-////
-////        updated_tasks_amount = task_count;
-////        task_count = 0;
-////      }
-////    }
-//
-//    return tie(new_tasks, old_tasks);
-//  }
-
   std::tuple<TasksInfo, TasksInfo> PerformPersonTasks(
-      const std::string& person, int task_count) {
+      const std::string &person, int task_count) {
     TasksInfo upgrade;
     TasksInfo updated;
     TasksInfo untouched;
-    auto& tasks_info = staff[person];
-    for (auto& item : tasks_info) {
+    auto &tasks_info = staff[person];
+    for (auto &item : tasks_info) {
       if (item.first == TaskStatus::NEW) {
         if (item.second > 0) {
           int new_status_count = item.second;
@@ -246,48 +146,30 @@ void PrintTasksInfo(TasksInfo tasks_info) {
 int main() {
   TeamTasks tasks;
 
-//  tasks.AddNewTask("Ilia");
-//  for (int i = 0; i < 3; ++i) {
-//    tasks.AddNewTask("Ivan");
-//  }
-//  cout << "Ilia's tasks: ";
-//  PrintTasksInfo(tasks.GetPersonTasksInfo("Ilia"));
-//  cout << "Ivan's tasks: ";
-//  PrintTasksInfo(tasks.GetPersonTasksInfo("Ivan"));
-//
-//  TasksInfo updated_tasks, untouched_tasks;
-//
-//  tie(updated_tasks, untouched_tasks) =
-//      tasks.PerformPersonTasks("Ivan", 2);
-//  cout << "Updated Ivan's tasks: ";
-//  PrintTasksInfo(updated_tasks);
-//  cout << "Untouched Ivan's tasks: ";
-//  PrintTasksInfo(untouched_tasks);
-//
-//  tie(updated_tasks, untouched_tasks) =
-//      tasks.PerformPersonTasks("Ivan", 2);
-//  cout << "Updated Ivan's tasks: ";
-//  PrintTasksInfo(updated_tasks);
-//  cout << "Untouched Ivan's tasks: ";
-//  PrintTasksInfo(untouched_tasks);
+  tasks.AddNewTask("Ilia");
+  for (int i = 0; i < 3; ++i) {
+    tasks.AddNewTask("Ivan");
+  }
+  cout << "Ilia's tasks: ";
+  PrintTasksInfo(tasks.GetPersonTasksInfo("Ilia"));
+  cout << "Ivan's tasks: ";
+  PrintTasksInfo(tasks.GetPersonTasksInfo("Ivan"));
 
-  tasks.AddNewTask("Alice");
-  tasks.AddNewTask("Alice");
-  tasks.AddNewTask("Alice");
-  tasks.AddNewTask("Alice");
-  tasks.AddNewTask("Alice");
-  tasks.PerformPersonTasks("Alice", 5);
-  tasks.PerformPersonTasks("Alice", 5);
-  tasks.PerformPersonTasks("Alice", 1);
-  tasks.AddNewTask("Alice");
-  tasks.AddNewTask("Alice");
-  tasks.AddNewTask("Alice");
-  tasks.AddNewTask("Alice");
-  tasks.AddNewTask("Alice");
-  tasks.PerformPersonTasks("Alice", 2);
-  tasks.GetPersonTasksInfo("Alice");
-  tasks.PerformPersonTasks("Alice", 4);
-  tasks.GetPersonTasksInfo("Alice");
+  TasksInfo updated_tasks, untouched_tasks;
+
+  tie(updated_tasks, untouched_tasks) =
+      tasks.PerformPersonTasks("Ivan", 2);
+  cout << "Updated Ivan's tasks: ";
+  PrintTasksInfo(updated_tasks);
+  cout << "Untouched Ivan's tasks: ";
+  PrintTasksInfo(untouched_tasks);
+
+  tie(updated_tasks, untouched_tasks) =
+      tasks.PerformPersonTasks("Ivan", 2);
+  cout << "Updated Ivan's tasks: ";
+  PrintTasksInfo(updated_tasks);
+  cout << "Untouched Ivan's tasks: ";
+  PrintTasksInfo(untouched_tasks);
 
   return 0;
 }

@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/YellowBelt.dir/TaskStatus.cpp.o"
+  "CMakeFiles/YellowBelt.dir/ReferenceToElement.cpp.o"
   "YellowBelt"
   "YellowBelt.pdb"
 )

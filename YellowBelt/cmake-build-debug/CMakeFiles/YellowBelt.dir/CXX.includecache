@@ -6,10 +6,8 @@
 
 #IncludeRegexTransform: 
 
-/home/ilya/CLionProjects/Coursera/YellowBelt/TaskStatus.cpp
+/home/ilya/CLionProjects/Coursera/YellowBelt/ReferenceToElement.cpp
 iostream
--
-string
 -
 map
 -
