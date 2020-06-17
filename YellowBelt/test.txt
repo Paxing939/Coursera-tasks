@@ -1,8 +1,28 @@
-Compile error: b'/tmp/submissionsn0yobuv/tmpt9huvpgk.cpp:41:40: fatal error: no matching function for call to \'GetRefStrict\'\n
-   belts::AssertDoesntThrow([&] { GetRefStrict(m, kv.first); });\n
-^~~~~~~~~~~~\n/tmp/submissionsn0yobuv/tmpt9huvpgk.cpp:74:5: note: in instantiation of function template specialization
-\'Test<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int>\' requested here\n
- Test(s2i, {string("four"), string("foo")});\n
-   ^\n/tmp/submissionsn0yobuv/tmpt9huvpgk.cpp:20:4: note: candidate template ignored: could not match \'int\' against
-    \'std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >\'\nT& GetRefStrict(map<int, T> &m, int key) {\n   ^\n1 error generated.\n'
+Your output:
+No bus
+No stop
+No bus
+32 32K
+Stop Vnukovo: 32 32K 950
+Stop Moskovsky: no interchange
+Stop Rumyantsevo: no interchange
+Stop Troparyovo: 950
+Bus 272: Vnukovo Moskovsky Rumyantsevo Troparyovo
+Bus 32: Tolstopaltsevo Marushkino Vnukovo
+Bus 32K: Tolstopaltsevo Marushkino Vnukovo Peredelkino Solntsevo Skolkovo
+Bus 950: Kokoshkino Marushkino Vnukovo Peredelkino Solntsevo Troparyovo
 
+
+Correct output:
+No buses
+No stop
+No bus
+32 32K
+Stop Vnukovo: 32 32K 950
+Stop Moskovsky: no interchange
+Stop Rumyantsevo: no interchange
+Stop Troparyovo: 950
+Bus 272: Vnukovo Moskovsky Rumyantsevo Troparyovo
+Bus 32: Tolstopaltsevo Marushkino Vnukovo
+Bus 32K: Tolstopaltsevo Marushkino Vnukovo Peredelkino Solntsevo Skolkovo
+Bus 950: Kokoshkino Marushkino Vnukovo Peredelkino Solntsevo Troparyovo

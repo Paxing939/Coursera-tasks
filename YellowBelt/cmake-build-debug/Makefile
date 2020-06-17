@@ -123,32 +123,32 @@ YellowBelt/fast:
 	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/build
 .PHONY : YellowBelt/fast
 
-Sqr.o: Sqr.cpp.o
+RefactoringOfBusStops.o: RefactoringOfBusStops.cpp.o
 
-.PHONY : Sqr.o
+.PHONY : RefactoringOfBusStops.o
 
 # target to build an object file
-Sqr.cpp.o:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/Sqr.cpp.o
-.PHONY : Sqr.cpp.o
+RefactoringOfBusStops.cpp.o:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.o
+.PHONY : RefactoringOfBusStops.cpp.o
 
-Sqr.i: Sqr.cpp.i
+RefactoringOfBusStops.i: RefactoringOfBusStops.cpp.i
 
-.PHONY : Sqr.i
+.PHONY : RefactoringOfBusStops.i
 
 # target to preprocess a source file
-Sqr.cpp.i:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/Sqr.cpp.i
-.PHONY : Sqr.cpp.i
+RefactoringOfBusStops.cpp.i:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.i
+.PHONY : RefactoringOfBusStops.cpp.i
 
-Sqr.s: Sqr.cpp.s
+RefactoringOfBusStops.s: RefactoringOfBusStops.cpp.s
 
-.PHONY : Sqr.s
+.PHONY : RefactoringOfBusStops.s
 
 # target to generate assembly for a file
-Sqr.cpp.s:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/Sqr.cpp.s
-.PHONY : Sqr.cpp.s
+RefactoringOfBusStops.cpp.s:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.s
+.PHONY : RefactoringOfBusStops.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... YellowBelt"
-	@echo "... Sqr.o"
-	@echo "... Sqr.i"
-	@echo "... Sqr.s"
+	@echo "... RefactoringOfBusStops.o"
+	@echo "... RefactoringOfBusStops.i"
+	@echo "... RefactoringOfBusStops.s"
 .PHONY : help
 
 

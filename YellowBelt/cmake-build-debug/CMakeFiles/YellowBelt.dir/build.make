@@ -57,27 +57,27 @@ include CMakeFiles/YellowBelt.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/YellowBelt.dir/flags.make
 
-CMakeFiles/YellowBelt.dir/Sqr.cpp.o: CMakeFiles/YellowBelt.dir/flags.make
-CMakeFiles/YellowBelt.dir/Sqr.cpp.o: ../Sqr.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ilya/CLionProjects/Coursera/YellowBelt/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/YellowBelt.dir/Sqr.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/YellowBelt.dir/Sqr.cpp.o -c /home/ilya/CLionProjects/Coursera/YellowBelt/Sqr.cpp
+CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.o: CMakeFiles/YellowBelt.dir/flags.make
+CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.o: ../RefactoringOfBusStops.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ilya/CLionProjects/Coursera/YellowBelt/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.o -c /home/ilya/CLionProjects/Coursera/YellowBelt/RefactoringOfBusStops.cpp
 
-CMakeFiles/YellowBelt.dir/Sqr.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/YellowBelt.dir/Sqr.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ilya/CLionProjects/Coursera/YellowBelt/Sqr.cpp > CMakeFiles/YellowBelt.dir/Sqr.cpp.i
+CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ilya/CLionProjects/Coursera/YellowBelt/RefactoringOfBusStops.cpp > CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.i
 
-CMakeFiles/YellowBelt.dir/Sqr.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/YellowBelt.dir/Sqr.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ilya/CLionProjects/Coursera/YellowBelt/Sqr.cpp -o CMakeFiles/YellowBelt.dir/Sqr.cpp.s
+CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ilya/CLionProjects/Coursera/YellowBelt/RefactoringOfBusStops.cpp -o CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.s
 
 # Object files for target YellowBelt
 YellowBelt_OBJECTS = \
-"CMakeFiles/YellowBelt.dir/Sqr.cpp.o"
+"CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.o"
 
 # External object files for target YellowBelt
 YellowBelt_EXTERNAL_OBJECTS =
 
-YellowBelt: CMakeFiles/YellowBelt.dir/Sqr.cpp.o
+YellowBelt: CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.o
 YellowBelt: CMakeFiles/YellowBelt.dir/build.make
 YellowBelt: CMakeFiles/YellowBelt.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ilya/CLionProjects/Coursera/YellowBelt/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable YellowBelt"

@@ -6,15 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/ilya/CLionProjects/Coursera/YellowBelt/Sqr.cpp
+/home/ilya/CLionProjects/Coursera/YellowBelt/RefactoringOfBusStops.cpp
+string
+-
 iostream
+-
+cassert
 -
 vector
 -
 map
 -
-utility
--
-string
+set
 -
 
