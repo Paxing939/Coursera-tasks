@@ -123,32 +123,32 @@ YellowBelt/fast:
 	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/build
 .PHONY : YellowBelt/fast
 
-TestGetDistinctRealRootCount.o: TestGetDistinctRealRootCount.cpp.o
+TestPerson.o: TestPerson.cpp.o
 
-.PHONY : TestGetDistinctRealRootCount.o
+.PHONY : TestPerson.o
 
 # target to build an object file
-TestGetDistinctRealRootCount.cpp.o:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestGetDistinctRealRootCount.cpp.o
-.PHONY : TestGetDistinctRealRootCount.cpp.o
+TestPerson.cpp.o:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestPerson.cpp.o
+.PHONY : TestPerson.cpp.o
 
-TestGetDistinctRealRootCount.i: TestGetDistinctRealRootCount.cpp.i
+TestPerson.i: TestPerson.cpp.i
 
-.PHONY : TestGetDistinctRealRootCount.i
+.PHONY : TestPerson.i
 
 # target to preprocess a source file
-TestGetDistinctRealRootCount.cpp.i:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestGetDistinctRealRootCount.cpp.i
-.PHONY : TestGetDistinctRealRootCount.cpp.i
+TestPerson.cpp.i:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestPerson.cpp.i
+.PHONY : TestPerson.cpp.i
 
-TestGetDistinctRealRootCount.s: TestGetDistinctRealRootCount.cpp.s
+TestPerson.s: TestPerson.cpp.s
 
-.PHONY : TestGetDistinctRealRootCount.s
+.PHONY : TestPerson.s
 
 # target to generate assembly for a file
-TestGetDistinctRealRootCount.cpp.s:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestGetDistinctRealRootCount.cpp.s
-.PHONY : TestGetDistinctRealRootCount.cpp.s
+TestPerson.cpp.s:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestPerson.cpp.s
+.PHONY : TestPerson.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... YellowBelt"
-	@echo "... TestGetDistinctRealRootCount.o"
-	@echo "... TestGetDistinctRealRootCount.i"
-	@echo "... TestGetDistinctRealRootCount.s"
+	@echo "... TestPerson.o"
+	@echo "... TestPerson.i"
+	@echo "... TestPerson.s"
 .PHONY : help
 
 

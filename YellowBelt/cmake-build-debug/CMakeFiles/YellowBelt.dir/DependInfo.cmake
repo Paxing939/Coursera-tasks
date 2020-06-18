@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/ilya/CLionProjects/Coursera/YellowBelt/TestGetDistinctRealRootCount.cpp" "/home/ilya/CLionProjects/Coursera/YellowBelt/cmake-build-debug/CMakeFiles/YellowBelt.dir/TestGetDistinctRealRootCount.cpp.o"
+  "/home/ilya/CLionProjects/Coursera/YellowBelt/TestPerson.cpp" "/home/ilya/CLionProjects/Coursera/YellowBelt/cmake-build-debug/CMakeFiles/YellowBelt.dir/TestPerson.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
