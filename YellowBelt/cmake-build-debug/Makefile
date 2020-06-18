@@ -123,32 +123,32 @@ YellowBelt/fast:
 	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/build
 .PHONY : YellowBelt/fast
 
-RefactoringOfBusStops.o: RefactoringOfBusStops.cpp.o
+TestGetDistinctRealRootCount.o: TestGetDistinctRealRootCount.cpp.o
 
-.PHONY : RefactoringOfBusStops.o
+.PHONY : TestGetDistinctRealRootCount.o
 
 # target to build an object file
-RefactoringOfBusStops.cpp.o:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.o
-.PHONY : RefactoringOfBusStops.cpp.o
+TestGetDistinctRealRootCount.cpp.o:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestGetDistinctRealRootCount.cpp.o
+.PHONY : TestGetDistinctRealRootCount.cpp.o
 
-RefactoringOfBusStops.i: RefactoringOfBusStops.cpp.i
+TestGetDistinctRealRootCount.i: TestGetDistinctRealRootCount.cpp.i
 
-.PHONY : RefactoringOfBusStops.i
+.PHONY : TestGetDistinctRealRootCount.i
 
 # target to preprocess a source file
-RefactoringOfBusStops.cpp.i:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.i
-.PHONY : RefactoringOfBusStops.cpp.i
+TestGetDistinctRealRootCount.cpp.i:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestGetDistinctRealRootCount.cpp.i
+.PHONY : TestGetDistinctRealRootCount.cpp.i
 
-RefactoringOfBusStops.s: RefactoringOfBusStops.cpp.s
+TestGetDistinctRealRootCount.s: TestGetDistinctRealRootCount.cpp.s
 
-.PHONY : RefactoringOfBusStops.s
+.PHONY : TestGetDistinctRealRootCount.s
 
 # target to generate assembly for a file
-RefactoringOfBusStops.cpp.s:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/RefactoringOfBusStops.cpp.s
-.PHONY : RefactoringOfBusStops.cpp.s
+TestGetDistinctRealRootCount.cpp.s:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestGetDistinctRealRootCount.cpp.s
+.PHONY : TestGetDistinctRealRootCount.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... YellowBelt"
-	@echo "... RefactoringOfBusStops.o"
-	@echo "... RefactoringOfBusStops.i"
-	@echo "... RefactoringOfBusStops.s"
+	@echo "... TestGetDistinctRealRootCount.o"
+	@echo "... TestGetDistinctRealRootCount.i"
+	@echo "... TestGetDistinctRealRootCount.s"
 .PHONY : help
 
 
