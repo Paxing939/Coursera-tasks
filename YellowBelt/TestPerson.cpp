@@ -93,21 +93,49 @@ private:
   int fail_count = 0;
 };
 
-class Person {
-public:
-  // Вы можете вставлять сюда различные реализации класса,
-  // чтобы проверить, что ваши тесты пропускают корректный код
-  // и ловят некорректный
-  void ChangeFirstName(int year, const string& first_name) {
-  }
-  void ChangeLastName(int year, const string& last_name) {
-  }
-  string GetFullName(int year) {
-  }
-};
+//class Person {
+//public:
+//  // Вы можете вставлять сюда различные реализации класса,
+//  // чтобы проверить, что ваши тесты пропускают корректный код
+//  // и ловят некорректный
+//  void ChangeFirstName(int year, const string& first_name) {
+//  }
+//  void ChangeLastName(int year, const string& last_name) {
+//  }
+//  string GetFullName(int year) {
+//  }
+//};
+
+void TestAll() {
+  Person person;
+  AssertEqual(person.GetFullName(1260), "Incognito", "1");
+  person.ChangeFirstName(1262, "Ilya");
+  AssertEqual(person.GetFullName(1263), "Ilya with unknown last name", "2");
+  person.ChangeLastName(1263, "Sachok");
+  AssertEqual(person.GetFullName(1264), "Ilya Sachok", "3");
+  person.ChangeFirstName(1264, "Kas");
+  AssertEqual(person.GetFullName(1264), "Kas Sachok", "5");
+  person.ChangeLastName(1265, "Ker");
+  AssertEqual(person.GetFullName(1265), "Kas Ker", "6");
+
+  person.ChangeFirstName(1270, "K");
+  AssertEqual(person.GetFullName(1276), "K Ker", "7");
+  person.ChangeLastName(1270, "K");
+  AssertEqual(person.GetFullName(1276), "K K", "8");
+  AssertEqual(person.GetFullName(1200), "Incognito", "9");
+
+
+  Person person1;
+  AssertEqual(person1.GetFullName(1260), "Incognito", "10");
+  person1.ChangeLastName(1263, "Sachok");
+  AssertEqual(person1.GetFullName(1264), "Sachok with unknown first name", "11");
+  person1.ChangeFirstName(1262, "Ilya");
+  AssertEqual(person1.GetFullName(1263), "Ilya Sachok", "12");
+}
 
 int main() {
   TestRunner runner;
   // добавьте сюда свои тесты
+  runner.RunTest(TestAll, "TestAll");
   return 0;
 }
