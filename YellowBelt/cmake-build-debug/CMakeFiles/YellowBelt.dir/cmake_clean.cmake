@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/YellowBelt.dir/TestPerson.cpp.o"
+  "CMakeFiles/YellowBelt.dir/TestRational.cpp.o"
   "YellowBelt"
   "YellowBelt.pdb"
 )

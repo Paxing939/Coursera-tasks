@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/YellowBelt.dir/TestPerson.cpp.o  -o YellowBelt 
+/usr/bin/c++  -g   CMakeFiles/YellowBelt.dir/TestRational.cpp.o  -o YellowBelt 

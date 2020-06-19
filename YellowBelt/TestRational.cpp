@@ -93,44 +93,47 @@ private:
   int fail_count = 0;
 };
 
-class Person {
-public:
-  // Вы можете вставлять сюда различные реализации класса,
-  // чтобы проверить, что ваши тесты пропускают корректный код
-  // и ловят некорректный
-  void ChangeFirstName(int year, const string& first_name) {
-  }
-  void ChangeLastName(int year, const string& last_name) {
-  }
-  string GetFullName(int year) {
-  }
-};
+//class Rational {
+//public:
+//  // Вы можете вставлять сюда различные реализации,
+//  // чтобы проверить, что ваши тесты пропускают корректный код
+//  // и ловят некорректный
+//
+//  Rational();
+//  Rational(int numerator, int denominator) {
+//  }
+//
+//  int Numerator() const {
+//  }
+//
+//  int Denominator() const {
+//  }
+//};
 
 void TestAll() {
-  Person person;
-  AssertEqual(person.GetFullName(1260), "Incognito", "1");
-  person.ChangeFirstName(1262, "Ilya");
-  AssertEqual(person.GetFullName(1263), "Ilya with unknown last name", "2");
-  person.ChangeLastName(1263, "Sachok");
-  AssertEqual(person.GetFullName(1264), "Ilya Sachok", "3");
-  person.ChangeFirstName(1264, "Kas");
-  AssertEqual(person.GetFullName(1264), "Kas Sachok", "5");
-  person.ChangeLastName(1265, "Ker");
-  AssertEqual(person.GetFullName(1265), "Kas Ker", "6");
+  // кконструктор по умолчанию
+  Rational r1;
+  AssertEqual(r1.Numerator(), 0, "1");
+  AssertEqual(r1.Denominator(), 1, "2");
 
-  person.ChangeFirstName(1270, "K");
-  AssertEqual(person.GetFullName(1276), "K Ker", "7");
-  person.ChangeLastName(1270, "K");
-  AssertEqual(person.GetFullName(1276), "K K", "8");
-  AssertEqual(person.GetFullName(1200), "Incognito", "9");
+  Rational r2(1, 4);
+  AssertEqual(r2.Numerator(), 1, "3");
+  AssertEqual(r2.Denominator(), 4, "4");
 
+  Rational r3(2, 4);
+  AssertEqual(r3.Numerator(), 1, "5");
+  AssertEqual(r3.Denominator(), 2, "6");
 
-  Person person1;
-  AssertEqual(person1.GetFullName(1260), "Incognito", "10");
-  person1.ChangeLastName(1263, "Sachok");
-  AssertEqual(person1.GetFullName(1264), "Sachok with unknown first name", "11");
-  person1.ChangeFirstName(1262, "Ilya");
-  AssertEqual(person1.GetFullName(1263), "Ilya Sachok", "12");
+  Rational r4(-2, 4);
+  AssertEqual(r4.Numerator(), -1, "7");
+  AssertEqual(r4.Denominator(), 2, "8");
+
+  Rational r5(-200, -1000);
+  AssertEqual(r5.Numerator(), 1, "9");
+  AssertEqual(r5.Denominator(), 5, "10");
+
+  Rational r6(0, 1000);
+  AssertEqual(r6.Denominator(), 1, "11");
 }
 
 int main() {

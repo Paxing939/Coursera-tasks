@@ -123,32 +123,32 @@ YellowBelt/fast:
 	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/build
 .PHONY : YellowBelt/fast
 
-TestPerson.o: TestPerson.cpp.o
+TestRational.o: TestRational.cpp.o
 
-.PHONY : TestPerson.o
+.PHONY : TestRational.o
 
 # target to build an object file
-TestPerson.cpp.o:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestPerson.cpp.o
-.PHONY : TestPerson.cpp.o
+TestRational.cpp.o:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestRational.cpp.o
+.PHONY : TestRational.cpp.o
 
-TestPerson.i: TestPerson.cpp.i
+TestRational.i: TestRational.cpp.i
 
-.PHONY : TestPerson.i
+.PHONY : TestRational.i
 
 # target to preprocess a source file
-TestPerson.cpp.i:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestPerson.cpp.i
-.PHONY : TestPerson.cpp.i
+TestRational.cpp.i:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestRational.cpp.i
+.PHONY : TestRational.cpp.i
 
-TestPerson.s: TestPerson.cpp.s
+TestRational.s: TestRational.cpp.s
 
-.PHONY : TestPerson.s
+.PHONY : TestRational.s
 
 # target to generate assembly for a file
-TestPerson.cpp.s:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestPerson.cpp.s
-.PHONY : TestPerson.cpp.s
+TestRational.cpp.s:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestRational.cpp.s
+.PHONY : TestRational.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... YellowBelt"
-	@echo "... TestPerson.o"
-	@echo "... TestPerson.i"
-	@echo "... TestPerson.s"
+	@echo "... TestRational.o"
+	@echo "... TestRational.i"
+	@echo "... TestRational.s"
 .PHONY : help
 
 
