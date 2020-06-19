@@ -82,7 +82,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/ilya/CLionProjects/Coursera/YellowBelt/TestRational.cpp">
+		<Unit filename="/home/ilya/CLionProjects/Coursera/YellowBelt/TetsIsPalindrom.cpp">
 			<Option target="YellowBelt"/>
 		</Unit>
 		<Unit filename="/home/ilya/CLionProjects/Coursera/YellowBelt/CMakeLists.txt">

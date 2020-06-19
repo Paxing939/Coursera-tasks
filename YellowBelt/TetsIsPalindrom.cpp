@@ -93,47 +93,31 @@ private:
   int fail_count = 0;
 };
 
-class Rational {
-public:
-  // Вы можете вставлять сюда различные реализации,
+bool IsPalindrom(const string& str) {
+  // Вы можете вставлять сюда различные реализации функции,
   // чтобы проверить, что ваши тесты пропускают корректный код
   // и ловят некорректный
-
-  Rational();
-  Rational(int numerator, int denominator) {
-  }
-
-  int Numerator() const {
-  }
-
-  int Denominator() const {
-  }
-};
+}
 
 void TestAll() {
-  // кконструктор по умолчанию
-  Rational r1;
-  AssertEqual(r1.Numerator(), 0, "1");
-  AssertEqual(r1.Denominator(), 1, "2");
+  Assert(IsPalindrom("madam"), "1");
+  Assert(IsPalindrom("wasitacaroracatisaw"), "2");
+  Assert(IsPalindrom("aa"), "3");
+  Assert(IsPalindrom("maam"), "4");
+  Assert(IsPalindrom("kek"), "5");
+  Assert(IsPalindrom("lol"), "6");
+  Assert(IsPalindrom("o"), "7");
+  Assert(IsPalindrom(""), "8");
 
-  Rational r2(1, 4);
-  AssertEqual(r2.Numerator(), 1, "3");
-  AssertEqual(r2.Denominator(), 4, "4");
+  Assert(!IsPalindrom("amms"), "9");
+  Assert(!IsPalindrom("mammsmammam"), "10");
+  Assert(!IsPalindrom("msmmamammam"), "11");
+  Assert(!IsPalindrom("maamsaam"), "11.5");
 
-  Rational r3(2, 4);
-  AssertEqual(r3.Numerator(), 1, "5");
-  AssertEqual(r3.Denominator(), 2, "6");
-
-  Rational r4(-2, 4);
-  AssertEqual(r4.Numerator(), -1, "7");
-  AssertEqual(r4.Denominator(), 2, "8");
-
-  Rational r5(-200, -1000);
-  AssertEqual(r5.Numerator(), 1, "9");
-  AssertEqual(r5.Denominator(), 5, "10");
-
-  Rational r6(0, 1000);
-  AssertEqual(r6.Denominator(), 1, "11");
+  Assert(IsPalindrom("    "), "12");
+  Assert(!IsPalindrom(" o"), "13");
+  Assert(!IsPalindrom("o "), "14");
+  Assert(!IsPalindrom(" wa s i ta carorac atisaw"), "15");
 }
 
 int main() {

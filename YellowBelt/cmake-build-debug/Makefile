@@ -123,32 +123,32 @@ YellowBelt/fast:
 	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/build
 .PHONY : YellowBelt/fast
 
-TestRational.o: TestRational.cpp.o
+TetsIsPalindrom.o: TetsIsPalindrom.cpp.o
 
-.PHONY : TestRational.o
+.PHONY : TetsIsPalindrom.o
 
 # target to build an object file
-TestRational.cpp.o:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestRational.cpp.o
-.PHONY : TestRational.cpp.o
+TetsIsPalindrom.cpp.o:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TetsIsPalindrom.cpp.o
+.PHONY : TetsIsPalindrom.cpp.o
 
-TestRational.i: TestRational.cpp.i
+TetsIsPalindrom.i: TetsIsPalindrom.cpp.i
 
-.PHONY : TestRational.i
+.PHONY : TetsIsPalindrom.i
 
 # target to preprocess a source file
-TestRational.cpp.i:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestRational.cpp.i
-.PHONY : TestRational.cpp.i
+TetsIsPalindrom.cpp.i:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TetsIsPalindrom.cpp.i
+.PHONY : TetsIsPalindrom.cpp.i
 
-TestRational.s: TestRational.cpp.s
+TetsIsPalindrom.s: TetsIsPalindrom.cpp.s
 
-.PHONY : TestRational.s
+.PHONY : TetsIsPalindrom.s
 
 # target to generate assembly for a file
-TestRational.cpp.s:
-	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TestRational.cpp.s
-.PHONY : TestRational.cpp.s
+TetsIsPalindrom.cpp.s:
+	$(MAKE) -f CMakeFiles/YellowBelt.dir/build.make CMakeFiles/YellowBelt.dir/TetsIsPalindrom.cpp.s
+.PHONY : TetsIsPalindrom.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... YellowBelt"
-	@echo "... TestRational.o"
-	@echo "... TestRational.i"
-	@echo "... TestRational.s"
+	@echo "... TetsIsPalindrom.o"
+	@echo "... TetsIsPalindrom.i"
+	@echo "... TetsIsPalindrom.s"
 .PHONY : help
 
 

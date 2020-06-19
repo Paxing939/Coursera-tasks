@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/YellowBelt.dir/TestRational.cpp.o"
+  "CMakeFiles/YellowBelt.dir/TetsIsPalindrom.cpp.o"
   "YellowBelt"
   "YellowBelt.pdb"
 )
