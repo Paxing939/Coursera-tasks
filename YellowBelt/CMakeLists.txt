@@ -3,4 +3,4 @@ project(YellowBelt)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(YellowBelt "2 week/TestPerson.cpp")
+add_executable(YellowBelt "3 week/PhoneNumber/phone_number.cpp")
