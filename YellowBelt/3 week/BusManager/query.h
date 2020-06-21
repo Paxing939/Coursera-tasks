@@ -6,6 +6,8 @@
 #include <vector>
 #include <map>
 
+using namespace std;
+
 enum class QueryType {
   NewBus,
   BusesForStop,

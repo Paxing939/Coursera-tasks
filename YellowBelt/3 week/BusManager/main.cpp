@@ -1,10 +1,12 @@
 #include "bus_manager.h"
-#include "responses.h"
 #include "query.h"
 
 using namespace std;
 
 int main() {
+//	freopen("input.txt", "r", stdin);
+//  freopen("output.txt", "w", stdout);
+
   int query_count;
   Query q;
 

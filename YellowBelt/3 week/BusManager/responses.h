@@ -5,6 +5,9 @@
 #include <cassert>
 #include <vector>
 #include <map>
+#include <set>
+
+using namespace std;
 
 struct BusesForStopResponse {
   vector<string> buses;
