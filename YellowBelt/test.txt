@@ -1,28 +1,47 @@
-Your output:
-No bus
-No stop
-No bus
-32 32K
-Stop Vnukovo: 32 32K 950
-Stop Moskovsky: no interchange
-Stop Rumyantsevo: no interchange
-Stop Troparyovo: 950
-Bus 272: Vnukovo Moskovsky Rumyantsevo Troparyovo
-Bus 32: Tolstopaltsevo Marushkino Vnukovo
-Bus 32K: Tolstopaltsevo Marushkino Vnukovo Peredelkino Solntsevo Skolkovo
-Bus 950: Kokoshkino Marushkino Vnukovo Peredelkino Solntsevo Troparyovo
+Compile error: b"/tmp/submissionyu2rs5hm/MergeSort2Parts.cpp:65:12: fatal error: invalid operands to binary expression ('Custom' and 'Custom')
+    if (*i <= *j) {
+        ~~ ^  ~~
+/tmp/submissionyu2rs5hm/MergeSort2Parts.cpp:101:5: note: in instantiation of function template specialization 'Merge<__gnu_cxx::__normal_iterator<Custom *, std::vector<Custom, std::allocator<Custom> > > >' requested here
+Merge<RandomIt>(range_begin, middle, range_end);
+                ^
+                /tmp/submissionyu2rs5hm/MergeSort2Parts.cpp:126:5: note: in instantiation of function template specialization 'MergeSort<__gnu_cxx::__normal_iterator<Custom *, std::vector<Custom, std::allocator<Custom> > > >' requested here
+                    MergeSort(values.begin(), values.end());
+                        ^
+                        /usr/bin/../lib/gcc/x86_64-linux-gnu/8/../../../../include/c++/8/bits/stl_pair.h:473:5: note: candidate template ignored: could not match 'pair<type-parameter-0-0, type-parameter-0-1>' against 'Custom'
+                            operator<=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+                                ^
+                                /usr/bin/../lib/gcc/x86_64-linux-gnu/8/../../../../include/c++/8/bits/stl_iterator.h:326:5: note: candidate template ignored: could not match 'reverse_iterator<type-parameter-0-0>' against 'Custom'
+                                    operator<=(const reverse_iterator<_Iterator>& __x,
+                                        ^
+                                        /usr/bin/../lib/gcc/x86_64-linux-gnu/8/../../../../include/c++/8/bits/stl_iterator.h:364:5: note: candidate template ignored: could not match 'reverse_iterator<type-parameter-0-0>' against 'Custom'
+                                            operator<=(const reverse_iterator<_IteratorL>& __x,
+                                                ^\n/usr/bin/../lib/gcc/x86_64-linux-gnu/8/../../../../include/c++/8/bits/stl_iterator.h:1151:5: note: candidate template ignored: could not match 'move_iterator<type-parameter-0-0>' against 'Custom'
+                                            operator<=(const move_iterator<_IteratorL>& __x,
+                                                ^
+                                                /usr/bin/../lib/gcc/x86_64-linux-gnu/8/../../../../include/c++/8/bits/stl_iterator.h:1157:5: note: candidate template ignored: could not match 'move_iterator<type-parameter-0-0>' against 'Custom'
+                                                operator<=(const move_iterator<_Iterator>& __x,
+                                                    ^
+                                                    /usr/bin/../lib/gcc/x86_64-linux-gnu/8/../../../../include/c++/8/string_view:508:5: note: candidate template ignored: could not match 'basic_string_view<type-parameter-0-0, type-parameter-0-1>' against 'Custom'
+                                                        operator<=(basic_string_view<_CharT, _Traits> __x,
+                                                        ^
+                                                    /usr/bin/../lib/gcc/x86_64-linux-gnu/8/../../../../include/c++/8/string_view:514:5: note: candidate template ignored: could not match 'basic_string_view<type-parameter-0-0, type-parameter-0-1>' against 'Custom'
+                                                        operator<=(basic_string_view<_CharT, _Traits> __x,
+                                                        ^
+                                                    /usr/bin/../lib/gcc/x86_64-linux-gnu/8/../../../../include/c++/8/string_view:520:5: note: candidate template ignored: could not match 'basic_string_view<type-parameter-0-0, type-parameter-0-1>' against 'Custom'
+                                                        operator<=(__detail::__idt<basic_string_view<_CharT, _Traits>> __x,
+                                                        ^
+                                                    /usr/bin/../lib/gcc/x86_64-linux-gnu/8/../../../../include/c++/8/bits/basic_string.h:6209:5: note: candidate template ignored: could not match 'basic_string<type-parameter-0-0, type-parameter-0-1, type-parameter-0-2>' against 'Custom'
+                                                        operator<=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+                                                ^
+                                                /usr/bin/../lib/gcc/x86_64-linux-gnu/8/../../../../include/c++/8/bits/basic_string.h:6222:5: note: candidate template ignored: could not match 'basic_string<type-parameter-0-0, type-parameter-0-1, type-parameter-0-2>' against 'Custom'
+                                                operator<=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,\n    ^
+                                            /usr/bin/../lib/gcc/x86_64-linux-gnu/8/../../../../include/c++/8/bits/basic_string.h:6234:5: note: candidate template ignored: could not match 'const _CharT *' against 'Custom'
+                                                operator<=(const _CharT* __lhs,
+                                                ^
+                                            /usr/bin/../lib/gcc/x86_64-linux-gnu/8/../../../../include/c++/8/bits/stl_vector.h:1789:5: note: candidate template ignored: could not match 'vector<type-parameter-0-0, type-parameter-0-1>' against 'Custom'
+                                            operator<=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+                                                ^
+                                        1 error generated.
+                                        "
+    }
 
-
-Correct output:
-No buses
-No stop
-No bus
-32 32K
-Stop Vnukovo: 32 32K 950
-Stop Moskovsky: no interchange
-Stop Rumyantsevo: no interchange
-Stop Troparyovo: 950
-Bus 272: Vnukovo Moskovsky Rumyantsevo Troparyovo
-Bus 32: Tolstopaltsevo Marushkino Vnukovo
-Bus 32K: Tolstopaltsevo Marushkino Vnukovo Peredelkino Solntsevo Skolkovo
-Bus 950: Kokoshkino Marushkino Vnukovo Peredelkino Solntsevo Troparyovo
