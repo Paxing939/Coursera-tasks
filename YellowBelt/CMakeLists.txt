@@ -3,4 +3,4 @@ project(YellowBelt)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(YellowBelt "4 week/RemoveDuplicates.cpp")
+add_executable(YellowBelt "4 week/FindStartsWith/FindStartsWithPrefix.cpp")
