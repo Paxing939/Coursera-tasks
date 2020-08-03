@@ -84,7 +84,7 @@ void TestParseEvent() {
     vector<string> events;
     events.push_back(ParseEvent(is));
     events.push_back(ParseEvent(is));
-//    AssertEqual(events, vector<string>{"first event  ", "second event"}, "Parse multiple events");
+    AssertEqual(events, vector<string>{"first event  ", "second event"}, "Parse multiple events");
   }
 }
 
