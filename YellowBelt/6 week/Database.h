@@ -66,6 +66,23 @@ public:
     return date_events;
   }
 
+  DateEvent Last(const Date date) {
+    if (date < database_.begin()->first) {
+      throw std::invalid_argument("No entries");
+    }
+
+    if (date >= database_.rbegin()->first) {
+      return DateEvent{database_.rbegin()->first, database_.rbegin()->second.back()};
+    }
+
+    if (database_.count(date) < 1) {
+      auto d = database_.lower_bound(date);
+      return DateEvent{d->first, d->second.back()};
+    } else {
+      return DateEvent{date, database_[date].back()};
+    }
+  }
+
 private:
   std::map<Date, std::vector<std::string>> database_;
 };

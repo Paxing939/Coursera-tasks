@@ -11,5 +11,5 @@ add_executable(YellowBelt
         "6 week/Node.cpp"
         "6 week/DateParser.cpp"
         "6 week/Token.cpp"
-#        "6 week/ConditionParserTest.cpp"
+        "6 week/ConditionParserTest.cpp"
         )

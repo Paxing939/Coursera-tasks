@@ -41,8 +41,7 @@ void AssertEqual(const T& t, const U& u,
 {
   if (t != u) {
     ostringstream os;
-    os << "Assertion failed: " << t << " != " << u
-       << " hint: " << hint;
+    os << "Assertion failed: " << t << " != " << u << " hint: " << hint;
     throw runtime_error(os.str());
   }
 }
