@@ -11,6 +11,16 @@ public:
 
   friend bool operator<(const Date &lhs, const Date &rhs);
 
+  friend bool operator<=(const Date &lhs, const Date &rhs);
+
+  friend bool operator>(const Date &lhs, const Date &rhs);
+
+  friend bool operator>=(const Date &lhs, const Date &rhs);
+
+  friend bool operator==(const Date &lhs, const Date &rhs);
+
+  friend bool operator!=(const Date &lhs, const Date &rhs);
+
   friend std::ostream &operator<<(std::ostream &out, const Date &date);
 
 private:
