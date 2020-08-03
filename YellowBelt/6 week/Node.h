@@ -27,17 +27,17 @@ public:
   bool Evaluate(const Date &date, const std::string &event) override {
     switch (cmp_) {
       case Less:
-        return date_ < date;
+        return date < date_;
       case LessOrEqual:
-        return date_ <= date;
+        return date <= date_;
       case Greater:
-        return date_ > date;
+        return date > date_;
       case GreaterOrEqual:
-        return date_ >= date;
+        return date >= date_;
       case Equal:
-        return date_ == date;
+        return date == date_;
       case NotEqual:
-        return date_ != date;
+        return date != date_;
     }
     return false;
   }
@@ -55,17 +55,17 @@ public:
   bool Evaluate(const Date &date, const std::string &event) override {
     switch (cmp_) {
       case Less:
-        return value_ < event;
+        return event < value_;
       case LessOrEqual:
-        return value_ <= event;
+        return event <= value_;
       case Greater:
-        return value_ > event;
+        return event > value_;
       case GreaterOrEqual:
-        return value_ >= event;
+        return event >= value_;
       case Equal:
-        return value_ == event;
+        return event == value_;
       case NotEqual:
-        return value_ != event;
+        return event != value_;
     }
     return false;
   }
