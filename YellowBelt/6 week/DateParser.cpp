@@ -5,5 +5,5 @@ Date ParseDate(std::istream &is) {
   getline(is, year, '-');
   getline(is, month, '-');
   is >> day;
-  return Date(stoi(day), stoi(month), stoi(year));
+  return Date(stoi(year), stoi(month), stoi(day));
 }

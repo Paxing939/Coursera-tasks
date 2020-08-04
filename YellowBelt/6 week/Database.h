@@ -18,6 +18,7 @@ public:
   int RemoveIf(const std::function<bool(const Date &, const std::string &)> &predicate) {
     int counter = 0;
 
+    std::vector<Date> dates_to_remove;
     for (auto &date : database_) {
       int i = 0;
       std::vector<int> indexes_to_remove;
@@ -34,7 +35,15 @@ public:
         tmp_counter++;
       }
 
+      if (date.second.empty()) {
+        dates_to_remove.push_back(date.first);
+      }
+
       counter += tmp_counter;
+    }
+
+    for (const auto &date : dates_to_remove) {
+      database_.erase(database_.find(date));
     }
 
     return counter;

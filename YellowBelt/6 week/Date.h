@@ -7,7 +7,7 @@
 
 class Date {
 public:
-  Date(int day, int month, int year);
+  Date(int year, int month, int day);
 
   friend bool operator<(const Date &lhs, const Date &rhs);
 
@@ -24,5 +24,5 @@ public:
   friend std::ostream &operator<<(std::ostream &out, const Date &date);
 
 private:
-  int day_, month_, year_;
+  int year_, month_, day_;
 };

@@ -10,8 +10,10 @@ using namespace std;
 
 string ParseEvent(istream &is) {
   string event;
-  is.get();
   getline(is, event);
+  while (event[0] == ' ') {
+    event.erase(event.begin());
+  }
   return event;
 }
 
@@ -21,7 +23,7 @@ int main() {
   freopen("input.txt", "r", stdin);
 //  freopen("output.txt", "w", stdout);
 
-//  TestAll();
+  TestAll();
 
   Database db;
 
