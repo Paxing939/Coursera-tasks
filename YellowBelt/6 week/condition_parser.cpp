@@ -1,5 +1,5 @@
-#include "ConditionParser.h"
-#include "Token.h"
+#include "condition_parser.h"
+#include "token.h"
 
 #include <map>
 

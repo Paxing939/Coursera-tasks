@@ -1,6 +1,6 @@
-#include "Database.h"
-#include "ConditionParser.h"
-#include "Node.h"
+#include "database.h"
+#include "condition_parser.h"
+#include "node.h"
 #include "test_runner.h"
 
 #include <iostream>
