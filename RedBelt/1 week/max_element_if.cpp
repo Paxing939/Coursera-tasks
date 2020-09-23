@@ -13,8 +13,12 @@ template<typename ForwardIterator, typename UnaryPredicate>
 ForwardIterator max_element_if(ForwardIterator first, ForwardIterator last, UnaryPredicate pred) {
   auto result = last;
   for (auto iter = first; iter != last; iter++) {
-    if (pred(*iter) && result != last && *iter > *result) {
-      result = iter;
+    if (pred(*iter)) {
+      if (result == last) {
+        result = iter;
+      } else if (*result < *iter) {
+        result = iter;
+      }
     }
   }
   return result;

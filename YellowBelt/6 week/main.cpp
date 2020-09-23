@@ -20,7 +20,7 @@ string ParseEvent(istream &is) {
 void TestAll();
 
 int main() {
-  freopen("input.txt", "r", stdin);
+//  freopen("input.txt", "r", stdin);
 //  freopen("output.txt", "w", stdout);
 
   TestAll();
