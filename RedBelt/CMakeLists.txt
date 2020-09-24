@@ -3,4 +3,4 @@ project(RedBelt)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(RedBelt "1 week/max_element_if.cpp" "1 week/test_runner.h")
+add_executable(RedBelt "1 week/update_field.cpp" "1 week/uniq_id.cpp")
