@@ -1,5 +1,7 @@
 #pragma once
 
+//#define _GLIBCXX_DEBUG 1
+
 #include <memory>
 #include <utility>
 
@@ -34,13 +36,13 @@ private:
 class EventComparisonNode : public Node {
 public:
 
-  EventComparisonNode(Comparison cmp, const std::string &value);
+  EventComparisonNode(Comparison cmp, std::string value);
 
   bool Evaluate(const Date &date, const std::string &event) override;
 
 private:
   Comparison cmp_;
-  const std::string &value_;
+  std::string value_;
 };
 
 class EmptyNode : public Node {
@@ -51,8 +53,6 @@ public:
   bool Evaluate(const Date &date, const std::string &event) override {
     return true;
   }
-
-private:
 };
 
 enum LogicalOperation {
@@ -63,7 +63,8 @@ enum LogicalOperation {
 class LogicalOperationNode : public Node {
 public:
 
-  LogicalOperationNode(LogicalOperation logicalOperation, std::shared_ptr<Node> left, std::shared_ptr<Node> expression);
+  LogicalOperationNode(LogicalOperation logicalOperation, const std::shared_ptr<Node> &left,
+                       const std::shared_ptr<Node> &expression);
 
   bool Evaluate(const Date &date, const std::string &event) override;
 

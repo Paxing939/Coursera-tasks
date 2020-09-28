@@ -23,6 +23,8 @@ public:
 
   friend std::ostream &operator<<(std::ostream &out, const Date &date);
 
+  int GetYear() const;
+
 private:
   int year_, month_, day_;
 };

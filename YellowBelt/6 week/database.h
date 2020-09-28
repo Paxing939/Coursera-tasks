@@ -1,5 +1,7 @@
 #pragma once
 
+//#define _GLIBCXX_DEBUG 1
+
 #include <map>
 #include <set>
 #include <vector>
@@ -19,6 +21,8 @@ public:
 
   struct DateEvent {
 
+    DateEvent() = default;
+
     DateEvent(const Date &date, const std::string &event) : date(date), event(event) {}
 
     friend std::ostream &operator<<(std::ostream &out, const DateEvent &date_event) {
@@ -36,4 +40,5 @@ public:
 
 private:
   std::map<Date, std::vector<std::string>> database_;
+  std::map<Date, std::set<std::string>> database_double_;
 };

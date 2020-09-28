@@ -1,5 +1,6 @@
 #pragma once
 
+//#define _GLIBCXX_DEBUG 1
 #include <sstream>
 #include <vector>
 using namespace std;

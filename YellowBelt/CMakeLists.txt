@@ -3,6 +3,8 @@ project(YellowBelt)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address,undefined")
+
 add_executable(YellowBelt
         "6 week/date.cpp"
         "6 week/main.cpp"

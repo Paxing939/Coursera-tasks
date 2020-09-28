@@ -31,3 +31,7 @@ std::ostream &operator<<(std::ostream &out, const Date &date) {
       << std::setw(2) << date.day_;
   return out;
 }
+
+int Date::GetYear() const {
+  return year_;
+}

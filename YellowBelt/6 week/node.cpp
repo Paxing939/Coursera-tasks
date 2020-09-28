@@ -1,14 +1,16 @@
 #include "node.h"
 
+#include <utility>
+
 DateComparisonNode::DateComparisonNode(Comparison cmp, const Date &date)
     : cmp_(cmp), date_(date) {}
 
-EventComparisonNode::EventComparisonNode(Comparison cmp, const std::string &value)
-    : cmp_(cmp), value_(value) {}
+EventComparisonNode::EventComparisonNode(Comparison cmp, std::string value)
+    : cmp_(cmp), value_(std::move(value)) {}
 
-LogicalOperationNode::LogicalOperationNode(LogicalOperation logicalOperation, std::shared_ptr<Node> left,
-                                           std::shared_ptr<Node> expression)
-    : logical_operation_(logicalOperation), left_(std::move(left)), expression_(std::move(expression)) {}
+LogicalOperationNode::LogicalOperationNode(LogicalOperation logicalOperation, const std::shared_ptr<Node> &left,
+                                           const std::shared_ptr<Node> &expression)
+    : logical_operation_(logicalOperation), left_(left), expression_(expression) {}
 
 bool DateComparisonNode::Evaluate(const Date &date, const std::string &event) {
   switch (cmp_) {
