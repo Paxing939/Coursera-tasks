@@ -1,7 +1,6 @@
 #include <vector>
 #include <stdexcept>
 #include <iostream>
-#include <deque>
 
 //#define DEBUG
 
@@ -58,7 +57,7 @@ public:
     }
   }
 
-  T& At(size_t index) const {
+  const T& At(size_t index) const {
     if (index >= data_back_.size() + data_front_.size()) {
       throw out_of_range("Index is out of range!");
     }
@@ -80,7 +79,7 @@ public:
     }
   }
 
-  T &Front() const {
+  const T &Front() const {
     if (data_front_.empty() && data_back_.empty()) {
       throw out_of_range("Deque is empty!");
     }
@@ -102,7 +101,7 @@ public:
     }
   }
 
-  T &Back() const {
+  const T &Back() const {
     if (data_front_.empty() && data_back_.empty()) {
       throw out_of_range("Deque is empty!");
     }
@@ -115,25 +114,25 @@ public:
 
   void PushBack(const T &element) {
     data_back_.push_back(element);
-    cerr << "PushBacked " << element << " and now deque is : " << *this << '\n';
+//    cerr << "PushBacked " << element << " and now deque is : " << *this << '\n';
   }
 
   void PushFront(const T &element) {
     data_front_.push_back(element);
-    cerr << "PushFronted " << element << " and now deque is : " << *this << '\n';
+//    cerr << "PushFronted " << element << " and now deque is : " << *this << '\n';
   }
 
 private:
   vector<T> data_back_, data_front_;
 };
 
-template <typename T>
-ostream &operator<<(ostream &os, const Deque<T> &deque) {
-  for (int i = 0; i < deque.Size(); ++i) {
-    os << deque[i] << " ";
-  }
-  return os;
-}
+//template <typename T>
+//ostream &operator<<(ostream &os, const Deque<T> &deque) {
+//  for (int i = 0; i < deque.Size(); ++i) {
+//    os << deque[i] << " ";
+//  }
+//  return os;
+//}
 
 #ifdef DEBUG
 void TestDeque() {
@@ -222,6 +221,4 @@ int main() {
   TestRunner tr;
   RUN_TEST(tr, TestDeque);
 #endif
-  deque d({10});
-  d.front();
 }
