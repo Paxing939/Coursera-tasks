@@ -3,4 +3,4 @@ project(RedBelt)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(RedBelt "1 week/paginator.cpp")
+add_executable(RedBelt "2 week/slow.cpp")
