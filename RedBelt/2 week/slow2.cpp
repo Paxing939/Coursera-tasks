@@ -9,32 +9,37 @@ using namespace std;
 class ReadingManager {
 public:
 
-  ReadingManager() : users_(100'000) {}
+  ReadingManager() : users_(100'000, -1) {}
 
   void Read(int user_id, int page_count) {
-    if (users_[user_id] == 0) {
+    if (users_[user_id] == -1) {
       indexes_.push_back(user_id);
     }
     if (pages_in_users_.count(users_[user_id]) > 0) {
-      pages_in_users_.era
+      pages_in_users_[users_[user_id]].erase(
+          find(pages_in_users_[users_[user_id]].begin(),
+               pages_in_users_[users_[user_id]].end(),
+               user_id)
+      );
+      if (pages_in_users_[users_[user_id]].empty()) {
+        pages_in_users_.erase(users_[user_id]);
+      }
     }
+    pages_in_users_[page_count].push_back(user_id);
     users_[user_id] = page_count;
   }
 
   double Cheer(int user_id) const {
-    if (indexes_.empty() || find(indexes_.begin(), indexes_.end(), user_id) == indexes_.end()) {
+    if (indexes_.empty() || users_[user_id] == -1) {
       return 0;
     }
     if (indexes_.size() == 1) {
       return 1;
     }
 
-    int counter = 0, user_pages = users_[user_id];
-    for (const auto &index : indexes_) {
-      if (index != user_id && users_[index] < user_pages) {
-        ++counter;
-      }
-    }
+    int counter, user_pages = users_[user_id];
+    auto lower_b = pages_in_users_.lower_bound(user_pages);
+    counter = map<int, vector<int>>{pages_in_users_.begin(), lower_b}.size();
 
     return counter * 1.0 / static_cast<double>(indexes_.size() - 1);
   }
