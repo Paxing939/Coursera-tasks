@@ -3,4 +3,4 @@ project(RedBelt)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(RedBelt "2 week/slow2.cpp" "2 week/hotel_booking.cpp")
+add_executable(RedBelt "2 week/object_pool.cpp")
