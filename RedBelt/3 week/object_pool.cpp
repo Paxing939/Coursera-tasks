@@ -1,4 +1,4 @@
-#include "test_runner.h"
+#include "../2 week/test_runner.h"
 
 #include <algorithm>
 #include <iostream>
@@ -17,12 +17,10 @@ public:
     if (!freed_.empty()) {
       T *obj = freed_.front();
       freed_.pop();
-      allocated_.push(obj);
       allocated_counter_.insert(obj);
       return obj;
     } else {
       T *obj =  new T;
-      allocated_.push(obj);
       allocated_counter_.insert(obj);
       return obj;
     }
@@ -32,7 +30,6 @@ public:
     if (!freed_.empty()) {
       T *obj = freed_.front();
       freed_.pop();
-      allocated_.push(obj);
       allocated_counter_.insert(obj);
       return obj;
     } else {
@@ -45,17 +42,7 @@ public:
       throw invalid_argument("There is no such pointer.");
     }
     allocated_counter_.erase(object);
-    queue<T*> new_allocated_;
-    while (!allocated_.empty()) {
-      auto front = allocated_.front();
-      if (front == object) {
-        freed_.push(front);
-      } else {
-        new_allocated_.push(front);
-      }
-      allocated_.pop();
-    }
-    allocated_ = new_allocated_;
+    freed_.push(object);
   }
 
   ~ObjectPool() {
@@ -64,15 +51,13 @@ public:
       freed_.pop();
       delete ptr;
     }
-    while (!allocated_.empty()) {
-      auto ptr = allocated_.front();
-      allocated_.pop();
+    for (auto ptr : allocated_counter_) {
       delete ptr;
     }
   }
 
 private:
-  queue<T*> freed_, allocated_;
+  queue<T*> freed_;
   set<T*> allocated_counter_;
 };
 
