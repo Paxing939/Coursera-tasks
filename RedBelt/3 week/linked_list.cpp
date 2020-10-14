@@ -47,9 +47,11 @@ public:
     if (node == nullptr) {
       PopFront();
     } else {
-      Node *tmp = node->next;
-      node->next = node->next->next;
-      delete tmp;
+      if (node->next != nullptr) {
+        Node *tmp = node->next;
+        node->next = node->next->next;
+        delete tmp;
+      }
     }
   }
 
