@@ -14,12 +14,16 @@ public:
   void Add(string_view source, string_view target) {
     string_view s, t;
     if (m_1.count(source) > 0) {
-      s = m_1.find(source)->second;
+      s = m_1.find(source)->first;
+    } else if (m_2.count(source) > 0) {
+      s = m_2.find(source)->first;
     } else {
       s = words_.emplace_back(source);
     }
     if (m_2.count(target) > 0) {
-      t = m_2.find(target)->second;
+      t = m_2.find(target)->first;
+    } else if (m_1.count(target) > 0) {
+      t = m_1.find(target)->first;
     } else {
       t = words_.emplace_back(target);
     }
@@ -29,7 +33,7 @@ public:
 
   string_view TranslateForward(string_view source) const {
     if (m_1.count(source) < 1) {
-      return "";
+      return {};
     } else {
       return m_1.at(source);
     }
@@ -37,7 +41,7 @@ public:
 
   string_view TranslateBackward(string_view target) const {
     if (m_2.count(target) < 1) {
-      return "";
+      return {};
     } else {
       return m_2.at(target);
     }
