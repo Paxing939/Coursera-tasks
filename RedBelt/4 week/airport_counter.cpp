@@ -10,58 +10,56 @@
 
 using namespace std;
 
-// TAirport should be enum with sequential items and last item TAirport::Last_
+// TAirport should be enum with sequential items_ and last item TAirport::Last_
 template <typename TAirport>
 class AirportCounter {
 public:
   // конструктор по умолчанию: список элементов пока пуст
-  AirportCounter() : items(static_cast<uint32_t>(TAirport::Last_)) {}
+  AirportCounter() = default;
 
   // конструктор от диапазона элементов типа TAirport
   template <typename TIterator>
   AirportCounter(TIterator begin, TIterator end) {
-    items.reserve(end - begin);
-    int index = 0;
+    for (size_t i = 0; i < items_.size(); ++i) {
+      items_[i].first = TAirport(i);
+    }
     for (auto it = begin; it != end; ++it) {
-      items.push_back({*it, 0});
-      access_[*it] = index;
-      ++index;
+      ++items_[static_cast<uint32_t>(*it)].second;
     }
   }
 
   // получить количество элементов, равных данному
   size_t Get(TAirport airport) const {
-    return items[access_.at(airport)].second;
+    return items_[static_cast<uint32_t>(airport)].second;
   }
 
   // добавить данный элемент
   void Insert(TAirport airport) {
-    ++items[access_[airport]].second;
+    ++items_[static_cast<uint32_t>(airport)].second;
   }
 
   // удалить одно вхождение данного элемента
   void EraseOne(TAirport airport) {
-    --items[access_[airport]].second;
+    --items_[static_cast<uint32_t>(airport)].second;
   }
 
   // удалить все вхождения данного элемента
   void EraseAll(TAirport airport) {
-    items[access_[airport]].second = 0;
+    items_[static_cast<uint32_t>(airport)].second = 0;
   }
 
   using Item = pair<TAirport, size_t>;
-  using Items = vector<Item>;
+  using Items = array<Item, static_cast<uint32_t>(TAirport::Last_)>;
 
   // получить некоторый объект, по которому можно проитерироваться,
   // получив набор объектов типа Item - пар (аэропорт, количество),
   // упорядоченных по аэропорту
   Items GetItems() const {
-    return items;
+    return items_;
   }
 
 private:
-  unordered_map<TAirport, int> access_;
-  Items items;
+  Items items_;
 };
 
 void TestMoscow() {
