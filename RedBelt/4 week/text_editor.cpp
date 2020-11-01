@@ -1,22 +1,82 @@
 #include <string>
+#include <list>
+
 #include "test_runner.h"
+
 using namespace std;
 
 class Editor {
 public:
   // Реализуйте конструктор по умолчанию и объявленные методы
-  Editor();
-  void Left();
-  void Right();
-  void Insert(char token);
-  void Cut(size_t tokens = 1);
-  void Copy(size_t tokens = 1);
-  void Paste();
-  string GetText() const;
+  Editor() : data_(), clipboard_(), position_pointer_(data_.begin()) {}
+
+  void Left() {
+    if (data_.empty() || position_pointer_ == data_.begin()) {
+      return;
+    } else {
+      --position_pointer_;
+      --int_position_pointer_;
+    }
+  }
+
+  void Right() {
+    if (data_.empty() || position_pointer_ == data_.end()) {
+      return;
+    } else {
+      ++position_pointer_;
+      ++int_position_pointer_;
+    }
+  }
+
+  void Insert(char token) {
+    data_.insert(position_pointer_, token);
+//    ++position_pointer_;
+    ++int_position_pointer_;
+  }
+
+  void Cut(size_t tokens = 1) {
+    clipboard_.clear();
+    auto last(position_pointer_);
+    for (size_t i = 0; i < tokens; ++i) {
+      if (last != data_.end()) {
+        ++last;
+      }
+    }
+    clipboard_.splice(clipboard_.begin(), data_, position_pointer_, last);
+    position_pointer_ = last;
+  }
+
+  void Copy(size_t tokens = 1) {
+    clipboard_.clear();
+    auto last(position_pointer_);
+    for (size_t i = 0; i < tokens; ++i) {
+      if (last != data_.end()) {
+        ++last;
+      }
+    }
+    clipboard_ = list<char>(position_pointer_, last);
+  }
+
+  void Paste() {
+    data_.splice(position_pointer_, clipboard_);
+  }
+
+  string GetText() const {
+    string result;
+    for (const auto &token : data_) {
+      result.push_back(token);
+    }
+    return result;
+  }
+
+private:
+  list<char> data_, clipboard_;
+  list<char>::iterator position_pointer_;
+  int int_position_pointer_ = 0;
 };
 
-void TypeText(Editor& editor, const string& text) {
-  for(char c : text) {
+void TypeText(Editor &editor, const string &text) {
+  for (char c : text) {
     editor.Insert(c);
   }
 }
@@ -28,11 +88,11 @@ void TestEditing() {
     const size_t text_len = 12;
     const size_t first_part_len = 7;
     TypeText(editor, "hello, world");
-    for(size_t i = 0; i < text_len; ++i) {
+    for (size_t i = 0; i < text_len; ++i) {
       editor.Left();
     }
     editor.Cut(first_part_len);
-    for(size_t i = 0; i < text_len - first_part_len; ++i) {
+    for (size_t i = 0; i < text_len - first_part_len; ++i) {
       editor.Right();
     }
     TypeText(editor, ", ");
@@ -56,13 +116,33 @@ void TestEditing() {
 
     ASSERT_EQUAL(editor.GetText(), "misprint");
   }
+  {
+    Editor editor;
+
+    const size_t text_len = 12;
+    const size_t move = 7;
+    TypeText(editor, "hello, world");
+    for (size_t i = 0; i < text_len; ++i) {
+      editor.Left();
+    }
+    TypeText(editor, "pidor, ");
+    editor.Copy(6);
+    for (int i = 0; i < move; ++i) {
+      editor.Left();
+    }
+    TypeText(editor, " ");
+    editor.Left();
+    editor.Paste();
+    ASSERT_EQUAL(editor.GetText(), "hello, pidor, hello, world");
+  }
+
 }
 
 void TestReverse() {
   Editor editor;
 
   const string text = "esreveR";
-  for(char c : text) {
+  for (char c : text) {
     editor.Insert(c);
     editor.Left();
   }
