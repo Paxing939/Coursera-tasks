@@ -30,7 +30,6 @@ public:
 
   void Insert(char token) {
     data_.insert(position_pointer_, token);
-//    ++position_pointer_;
     ++int_position_pointer_;
   }
 
@@ -58,6 +57,7 @@ public:
   }
 
   void Paste() {
+    int_position_pointer_ += clipboard_.size();
     data_.splice(position_pointer_, clipboard_);
   }
 
@@ -67,6 +67,10 @@ public:
       result.push_back(token);
     }
     return result;
+  }
+
+  char GetCurrentSymbol() {
+    return *position_pointer_;
   }
 
 private:
@@ -125,7 +129,7 @@ void TestEditing() {
     for (size_t i = 0; i < text_len; ++i) {
       editor.Left();
     }
-    TypeText(editor, "pidor, ");
+    TypeText(editor, "haaal, ");
     editor.Copy(6);
     for (int i = 0; i < move; ++i) {
       editor.Left();
@@ -133,9 +137,24 @@ void TestEditing() {
     TypeText(editor, " ");
     editor.Left();
     editor.Paste();
-    ASSERT_EQUAL(editor.GetText(), "hello, pidor, hello, world");
+    ASSERT_EQUAL(editor.GetText(), "hello, haaal, hello, world");
   }
 
+  {
+    Editor editor;
+
+    const size_t offset_len = 5;
+    TypeText(editor, "hello, world");
+    for (size_t i = 0; i < offset_len; ++i) {
+      editor.Left();
+    }
+    editor.Cut(5);
+    TypeText(editor, "programmer, ");
+    editor.Paste();
+    TypeText(editor, " programmer, ");
+
+    ASSERT_EQUAL(editor.GetText(), "hello, programmer, world programmer, ");
+  }
 }
 
 void TestReverse() {
@@ -184,11 +203,32 @@ void TestEmptyBuffer() {
   ASSERT_EQUAL(editor.GetText(), "example");
 }
 
+void TestRightAndLeft() {
+
+  Editor editor;
+
+  const size_t offset_len = 24;
+  TypeText(editor, "hello, world");
+  for (size_t i = 0; i < offset_len; ++i) {
+    editor.Left();
+  }
+  TypeText(editor, "123");
+
+  ASSERT_EQUAL(editor.GetText(), "123hello, world");
+
+  for (size_t i = 0; i < offset_len; ++i) {
+    editor.Right();
+  }
+  TypeText(editor, "123");
+  ASSERT_EQUAL(editor.GetText(), "123hello, world123");
+}
+
 int main() {
   TestRunner tr;
   RUN_TEST(tr, TestEditing);
   RUN_TEST(tr, TestReverse);
   RUN_TEST(tr, TestNoText);
   RUN_TEST(tr, TestEmptyBuffer);
+  RUN_TEST(tr, TestRightAndLeft);
   return 0;
 }
