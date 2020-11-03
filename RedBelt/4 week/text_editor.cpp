@@ -58,7 +58,8 @@ public:
 
   void Paste() {
     int_position_pointer_ += clipboard_.size();
-    data_.splice(position_pointer_, clipboard_);
+    auto clipboard_copy(clipboard_);
+    data_.splice(position_pointer_, clipboard_copy);
   }
 
   string GetText() const {
@@ -154,6 +155,21 @@ void TestEditing() {
     TypeText(editor, " programmer, ");
 
     ASSERT_EQUAL(editor.GetText(), "hello, programmer, world programmer, ");
+  }
+  {
+    Editor editor;
+
+    const size_t offset_len = 5;
+    TypeText(editor, "hello, world");
+    for (size_t i = 0; i < offset_len; ++i) {
+      editor.Left();
+    }
+    editor.Cut(5);
+    editor.Paste();
+    TypeText(editor, " ");
+    editor.Paste();
+
+    ASSERT_EQUAL(editor.GetText(), "hello, world world");
   }
 }
 
