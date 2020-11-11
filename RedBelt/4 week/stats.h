@@ -1,21 +1,33 @@
-#pragma once
+#ifndef STATS_H
+#define STATS_H
 
 #include "http_request.h"
 
-#include <string_view>
+#include <vector>
+#include <string>
+#include <set>
 #include <map>
-
-using namespace std;
 
 class Stats {
 public:
-  void AddMethod(string_view method);
 
-  void AddUri(string_view uri);
+  Stats();
 
-  const map<string_view, int> &GetMethodStats() const;
+  void AddMethod(std::string_view method);
 
-  const map<string_view, int> &GetUriStats() const;
+  void AddUri(std::string_view uri);
+
+  const std::map<std::string_view, int> &GetMethodStats() const;
+
+  const std::map<std::string_view, int> &GetUriStats() const;
+
+private:
+  std::set<std::string> methods_data_ = {"GET", "POST", "PUT", "DELETE"},
+      uris_data_ = {"/", "/order", "/product", "/basket", "/help"};
+  std::string UNKNOWN = "UNKNOWN", unknown = "unknown";
+  std::map<std::string_view, int> methods_, uris_;
 };
 
-HttpRequest ParseRequest(string_view line);
+HttpRequest ParseRequest(std::string_view line);
+
+#endif

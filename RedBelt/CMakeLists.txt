@@ -7,4 +7,4 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address,undefined")
 
-add_executable(RedBelt "4 week/server_stats.cpp")
+add_executable(RedBelt "4 week/server_stats.cpp" "4 week/stats.cpp")
