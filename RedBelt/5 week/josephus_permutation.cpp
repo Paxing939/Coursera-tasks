@@ -1,25 +1,44 @@
 #include "test_runner.h"
 
-#include <cstdint>
 #include <iterator>
+#include <iostream>
+#include <cstdint>
 #include <numeric>
 #include <vector>
-#include <iostream>
+#include <list>
 
 using namespace std;
 
 template<typename RandomIt>
 void MakeJosephusPermutation(RandomIt first, RandomIt last, uint32_t step_size) {
-  vector<typename RandomIt::value_type> pool(first, last);
-  size_t cur_pos = 0;
-  while (!pool.empty()) {
-    *(first++) = pool[cur_pos];
-    pool.erase(pool.begin() + cur_pos);
-    if (pool.empty()) {
-      break;
-    }
-    cur_pos = (cur_pos + step_size - 1) % pool.size();
+  if (first == last) {
+    return;
   }
+  list<typename RandomIt::value_type> l;
+  for (auto iter = first; iter != last; ++iter) {
+    l.push_back(std::move(*iter));
+  }
+  int vector_index = 0;
+  auto list_iter = l.begin();
+  while (l.size() != 1) {
+    *(first + vector_index) = std::move(*list_iter);
+    vector_index++;
+    auto tmp = list_iter;
+    ++list_iter;
+    l.erase(tmp);
+    for (int i = 0; i < step_size - 1; ++i) {
+      if (list_iter == l.end()) {
+        list_iter = l.begin();
+      }
+      ++list_iter;
+      if (list_iter == l.end()) {
+        list_iter = l.begin();
+      }
+    }
+
+  }
+
+  *(first + vector_index) = std::move(*l.begin());
 }
 
 vector<int> MakeTestVector() {
@@ -39,6 +58,16 @@ void TestIntVector() {
     vector<int> numbers_copy = numbers;
     MakeJosephusPermutation(begin(numbers_copy), end(numbers_copy), 3);
     ASSERT_EQUAL(numbers_copy, vector<int>({0, 3, 6, 9, 4, 8, 5, 2, 7, 1}));
+  }
+  {
+    vector<int> numbers_copy = {};
+    MakeJosephusPermutation(begin(numbers_copy), end(numbers_copy), 1);
+    ASSERT_EQUAL(numbers_copy, vector<int>({}));
+  }
+  {
+    vector<int> numbers_copy = {1, 2, 3, 4, 5, 6, 7};
+    MakeJosephusPermutation(begin(numbers_copy), end(numbers_copy), 10);
+    ASSERT_EQUAL(numbers_copy, vector<int>({1, 5, 4, 7, 2, 6, 3}));
   }
 }
 
@@ -66,20 +95,20 @@ ostream &operator<<(ostream &os, const NoncopyableInt &v) {
 
 void TestAvoidsCopying() {
   vector<NoncopyableInt> numbers;
-  numbers.push_back({1});
-  numbers.push_back({2});
-  numbers.push_back({3});
-  numbers.push_back({4});
-  numbers.push_back({5});
+  numbers.emplace_back(1);
+  numbers.emplace_back(2);
+  numbers.emplace_back(3);
+  numbers.emplace_back(4);
+  numbers.emplace_back(5);
 
   MakeJosephusPermutation(begin(numbers), end(numbers), 2);
 
   vector<NoncopyableInt> expected;
-  expected.push_back({1});
-  expected.push_back({3});
-  expected.push_back({5});
-  expected.push_back({4});
-  expected.push_back({2});
+  expected.emplace_back(1);
+  expected.emplace_back(3);
+  expected.emplace_back(5);
+  expected.emplace_back(4);
+  expected.emplace_back(2);
 
   ASSERT_EQUAL(numbers, expected);
 }
