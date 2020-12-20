@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include <set>
+#include <map>
 
 using namespace std;
 
@@ -14,7 +16,26 @@ using Char = typename String::value_type;
 
 template<typename String>
 vector<Group<String>> GroupHeavyStrings(vector<String> strings) {
+  map<set<Char<String>>, Group<String>> container;
 
+  for (auto &str : strings) {
+    set<Char<String>> word_compressor;
+    for (auto &symbol : str) {
+      word_compressor.insert(symbol);
+    }
+    container[move(word_compressor)].push_back(move(str));
+  }
+
+  vector<Group<String>> result(container.size());
+  int i = 0;
+  for (auto &[key, value] : container) {
+    for (auto &str : value) {
+      result[i].push_back(move(str));
+    }
+    ++i;
+  }
+
+  return result;
 }
 
 
