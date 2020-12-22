@@ -66,7 +66,7 @@ public:
       allocated_size_ *= 2;
       T *tmp = new T[allocated_size_];
       for (int i = 0; i < size_; ++i) {
-        tmp[i] = data_[i];
+        tmp[i] = std::move(data_[i]);
       }
       tmp[size_] = value;
       ++size_;
@@ -75,6 +75,30 @@ public:
       end_ = data_ + size_;
     } else {
       data_[size_] = value;
+      ++size_;
+      ++end_;
+    }
+  }
+
+  void PushBack(T &&value) {
+    if (data_ == nullptr) {
+      data_ = new T[1];
+      data_[0] = std::move(value);
+      size_ = 1;
+      allocated_size_ = 1;
+    } else if (size_ == allocated_size_) {
+      allocated_size_ *= 2;
+      T *tmp = new T[allocated_size_];
+      for (int i = 0; i < size_; ++i) {
+        tmp[i] = std::move(data_[i]);
+      }
+      tmp[size_] = std::move(value);
+      ++size_;
+      delete[] data_;
+      data_ = tmp;
+      end_ = data_ + size_;
+    } else {
+      data_[size_] = std::move(value);
       ++size_;
       ++end_;
     }
