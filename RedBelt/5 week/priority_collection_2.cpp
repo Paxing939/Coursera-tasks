@@ -18,7 +18,7 @@ public:
 
     Id Add(T object) {
         data_[0].push_back(move(object));
-        id_support_[next_id_].first = data_[0].rbegin();
+        id_support_[next_id_].first = prev(data_[0].end());
         id_support_[next_id_].second = 0;
         return next_id_++;
     }
@@ -41,17 +41,17 @@ public:
 
     void Promote(Id id) {
         T tmp = move(*id_support_[id].first);
-        data_[id_support_[id].second].erase(--id_support_[id].first.base());
+        data_[id_support_[id].second].erase(id_support_[id].first);
         if (data_[id_support_[id].second].empty()) {
             data_.erase(id_support_[id].second);
         }
         ++id_support_[id].second;
         data_[id_support_[id].second].push_back(move(tmp));
-        id_support_[id].first = data_[id_support_[id].second].rbegin();
+        id_support_[id].first = prev(data_[id_support_[id].second].end());
     }
 
     pair<const T&, int> GetMax() const {
-        return {*data_.rbegin()->second.rbegin(), data_.rbegin()->first};
+        return {*prev(data_.rbegin()->second.end()), data_.rbegin()->first};
     }
 
     pair<T, int> PopMax() {
@@ -65,7 +65,7 @@ public:
 
 private:
     map<int, list<T>> data_;
-    map<int64_t, pair<typename list<T>::reverse_iterator, int>> id_support_;
+    map<int64_t, pair<typename list<T>::iterator, int>> id_support_;
     int64_t next_id_ = 0;
 };
 
