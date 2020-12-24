@@ -7,4 +7,4 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address,undefined")
 
-add_executable(RedBelt "5 week/MergeSort3Parts.cpp")
+add_executable(RedBelt "5 week/priority_collection_2.cpp")
