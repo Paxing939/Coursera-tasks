@@ -1,80 +1,72 @@
 #include "test_runner.h"
+#include "profile.h"
 
+#include <fstream>
 #include <vector>
 #include <future>
 
 using namespace std;
 
-template<typename Iterator>
-class Paginator {
+template <typename Iterator>
+class IteratorRange {
 public:
-
-  Paginator(Iterator first, Iterator second, size_t page_size) {
-    auto iter = first;
-    while (iter != second) {
-      auto tmp_end = second - iter >= page_size ? iter + page_size : second;
-      pages_.emplace_back(iter, tmp_end);
-      iter = tmp_end;
-    }
+  IteratorRange(Iterator begin, Iterator end)
+      : first(begin)
+      , last(end)
+      , size_(distance(first, last))
+  {
   }
 
-  auto begin() {
-    return pages_.begin();
+  Iterator begin() const {
+    return first;
   }
 
-  auto end() {
-    return pages_.end();
-  }
-
-  auto begin() const {
-    return pages_.cbegin();
-  }
-
-  auto end() const {
-    return pages_.cend();
+  Iterator end() const {
+    return last;
   }
 
   size_t size() const {
-    return pages_.size();
+    return size_;
   }
 
-  class Page {
-  public:
-    Page(Iterator begin, Iterator end)
-        : begin_(begin), end_(end) {}
-
-    auto begin() {
-      return begin_;
-    }
-
-    auto end() {
-      return end_;
-    }
-
-    auto begin() const {
-      return begin_;
-    }
-
-    auto end() const {
-      return end_;
-    }
-
-    size_t size() const {
-      return end_ - begin_;
-    }
-
-  private:
-    Iterator begin_;
-    Iterator end_;
-  };
-
 private:
-  vector<Page> pages_;
+  Iterator first, last;
+  size_t size_;
 };
 
-template<typename C>
-auto Paginate(C &c, size_t page_size) {
-  return Paginator(c.begin(), c.end(), page_size);
+template <typename Iterator>
+class Paginator {
+private:
+  vector<IteratorRange<Iterator>> pages;
+
+public:
+  Paginator(Iterator begin, Iterator end, size_t page_size) {
+    for (size_t left = distance(begin, end); left > 0; ) {
+      size_t current_page_size = min(page_size, left);
+      Iterator current_page_end = next(begin, current_page_size);
+      pages.push_back({begin, current_page_end});
+
+      left -= current_page_size;
+      begin = current_page_end;
+    }
+  }
+
+  auto begin() const {
+    return pages.begin();
+  }
+
+  auto end() const {
+    return pages.end();
+  }
+
+  size_t size() const {
+    return pages.size();
+  }
+};
+
+template <typename C>
+auto Paginate(C& c, size_t page_size) {
+  return Paginator(begin(c), end(c), page_size);
 }
 
 int64_t SumMatrix(const vector<vector<int>> &matrix) {
@@ -87,19 +79,24 @@ int64_t SumMatrix(const vector<vector<int>> &matrix) {
   return result;
 }
 
-int64_t CalculateMatrixSum(const vector<vector<int>> &matrix) {
-  int64_t result = 0;
-  vector<future<int64_t>> futures;
-  size_t first_row = 0;
-  int page_size = static_cast<int>(matrix.size()) / 4;
-  for (auto page : Paginate(result,)) {
-    futures.push_back(
-        async([&page] {
-          return SumMatrix(page);
-        })
-    );
-    first_row += page_size;
+template <typename ContainerOfVectors>
+int64_t SumSingleThread(const ContainerOfVectors& matrix) {
+  int64_t sum = 0;
+  for (const auto& row : matrix) {
+    for (auto item : row) {
+      sum += item;
+    }
   }
+  return sum;
+}
+
+int64_t CalculateMatrixSum(const vector<vector<int>> &matrix) {
+  vector<future<int64_t>> futures;
+  int step = 2000;
+  for (auto el : Paginate(matrix, step)) {
+    futures.push_back(async([=] { return SumSingleThread(el); }));
+  }
+  int64_t result = 0;
   for (auto &f : futures) {
     result += f.get();
   }
@@ -113,10 +110,37 @@ void TestCalculateMatrixSum() {
       {9,  10, 11, 12},
       {13, 14, 15, 16}
   };
-  ASSERT_EQUAL(CalculateMatrixSum(matrix), 136);
+  ASSERT_EQUAL(CalculateMatrixSum(matrix), 136)
+
+  const vector<vector<int>> matrix_2 = {
+      {1,  2,  3,  4,  5, 6},
+      {5,  6,  7,  8,  5, 6},
+      {5,  6,  7,  8,  5, 6},
+      {9,  10, 11, 12, 5, 6},
+      {9,  10, 11, 12, 5, 6},
+      {13, 14, 15, 16, 5, 6}
+  };
+  ASSERT_EQUAL(CalculateMatrixSum(matrix_2), 270)
 }
+
+void TestFromFileMatrix() {
+  vector<vector<int>> matrix(9000);
+  ifstream reader("/home/ilya/dog_breeds.txt");
+  for (int i = 0; i < 9000; ++i) {
+    matrix[i].resize(9000);
+    for (int j = 0; j < 9000; ++j) {
+      reader >> matrix[i][j];
+    }
+  }
+  {
+    LOG_DURATION("Calculation time")
+    ASSERT_EQUAL(CalculateMatrixSum(matrix), 81000000)
+  }
+}
+
 
 int main() {
   TestRunner tr;
-  RUN_TEST(tr, TestCalculateMatrixSum);
+//  RUN_TEST(tr, TestCalculateMatrixSum);
+  RUN_TEST(tr, TestFromFileMatrix);
 }
