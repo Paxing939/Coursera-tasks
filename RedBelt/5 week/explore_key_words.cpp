@@ -1,31 +1,42 @@
 #include "test_runner.h"
 #include "profile.h"
 
-#include <map>
+#include <future>
 #include <string>
+#include <map>
+
 using namespace std;
 
 struct Stats {
   map<string, int> word_frequences;
 
-  void operator += (const Stats& other);
+  void operator+=(const Stats &other);
 };
 
-Stats ExploreLine(const set<string>& key_words, const string& line) {
+Stats ExploreLine(const set<string> &key_words, const string &line) {
+  Stats stats;
+  vector<future<void>> tasks;
+  for (const auto &word : key_words) {
+    tasks.push_back(
+        async([&word]{
+          Stats stats1;
+          
+        }));
+  }
 }
 
 Stats ExploreKeyWordsSingleThread(
-    const set<string>& key_words, istream& input
+    const set<string> &key_words, istream &input
 ) {
   Stats result;
-  for (string line; getline(input, line); ) {
+  for (string line; getline(input, line);) {
     result += ExploreLine(key_words, line);
   }
   return result;
 }
 
-Stats ExploreKeyWords(const set<string>& key_words, istream& input) {
-  
+Stats ExploreKeyWords(const set<string> &key_words, istream &input) {
+
 }
 
 void TestBasic() {
@@ -41,8 +52,8 @@ void TestBasic() {
   const auto stats = ExploreKeyWords(key_words, ss);
   const map<string, int> expected = {
       {"yangle", 6},
-      {"rocks", 2},
-      {"sucks", 1}
+      {"rocks",  2},
+      {"sucks",  1}
   };
   ASSERT_EQUAL(stats.word_frequences, expected);
 }
