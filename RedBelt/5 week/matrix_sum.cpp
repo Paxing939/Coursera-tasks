@@ -69,16 +69,6 @@ auto Paginate(C& c, size_t page_size) {
   return Paginator(begin(c), end(c), page_size);
 }
 
-int64_t SumMatrix(const vector<vector<int>> &matrix) {
-  int64_t result = 0;
-  for (const auto &line : matrix) {
-    for (const auto &el : line) {
-      result += el;
-    }
-  }
-  return result;
-}
-
 template <typename ContainerOfVectors>
 int64_t SumSingleThread(const ContainerOfVectors& matrix) {
   int64_t sum = 0;

@@ -10,19 +10,69 @@ using namespace std;
 struct Stats {
   map<string, int> word_frequences;
 
-  void operator+=(const Stats &other);
+  void operator+=(const Stats &other) {
+    for (auto &[key, value] : other.word_frequences) {
+      word_frequences[key] += value;
+    }
+  }
+
+  friend ostream &operator<<(ostream &, Stats);
 };
+
+ostream &operator<<(ostream &out, Stats stats) {
+  for (auto &[key, value] : stats.word_frequences) {
+    out << key << " - " << value << '\n';
+  }
+  return out;
+}
+
+int CountFrequency(const string &pat, const string &txt) {
+  int M = pat.length();
+  int N = txt.length();
+  int res = 0;
+
+  /* A loop to slide pat[] one by one */
+  for (int i = 0; i <= N - M; i++) {
+    /* For current index i, check for
+       pattern match */
+
+    int j = 0;
+    if (txt[i + j] == ' ') {
+      ++j;
+      for (; j < M; j++) {
+        if (txt[i + j] != pat[j])
+          break;
+      }
+      if (txt[i + j] == ' ') {
+        ++j;
+      }
+    }
+
+    // if pat[0...M-1] = txt[i, i+1, ...i+M-1]
+    if (j == M + 2) {
+      res++;
+      j = 0;
+    }
+  }
+  return res;
+}
 
 Stats ExploreLine(const set<string> &key_words, const string &line) {
   Stats stats;
-  vector<future<void>> tasks;
+  vector<future<Stats>> tasks;
+  tasks.reserve(key_words.size());
   for (const auto &word : key_words) {
     tasks.push_back(
-        async([&word]{
+        async([&word, &line] {
           Stats stats1;
-          
+          stats1.word_frequences[word] = CountFrequency(word, line);
+          return stats1;
         }));
   }
+  for (auto &task : tasks) {
+    stats += task.get();
+  }
+  return stats;
 }
 
 Stats ExploreKeyWordsSingleThread(
@@ -36,7 +86,13 @@ Stats ExploreKeyWordsSingleThread(
 }
 
 Stats ExploreKeyWords(const set<string> &key_words, istream &input) {
-
+  Stats stats;
+  while (!input.eof()) {
+    string line;
+    getline(input, line);
+    stats += ExploreLine(key_words, line);
+  }
+  return stats;
 }
 
 void TestBasic() {
@@ -50,6 +106,7 @@ void TestBasic() {
   ss << "Goondex really sucks, but yangle rocks. Use yangle\n";
 
   const auto stats = ExploreKeyWords(key_words, ss);
+  cout << stats;
   const map<string, int> expected = {
       {"yangle", 6},
       {"rocks",  2},
