@@ -5,6 +5,12 @@
 #include <string>
 #include <map>
 
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
+
 using namespace std;
 
 struct Stats {
@@ -37,13 +43,14 @@ int CountFrequency(const string &pat, const string &txt) {
        pattern match */
 
     int j = 0;
-    if (txt[i + j] == ' ') {
+    if (i + j == 0 || txt[i + j] == ' ' || txt[i + j] == '\n') {
       ++j;
       for (; j < M; j++) {
-        if (txt[i + j] != pat[j])
+        if (txt[i + j] != pat[j - 1])
           break;
       }
-      if (txt[i + j] == ' ') {
+      ++j;
+      if (i + j == txt.size() - 1 || txt[i + j] == ' ' || txt[i + j] == '\n') {
         ++j;
       }
     }
@@ -51,7 +58,6 @@ int CountFrequency(const string &pat, const string &txt) {
     // if pat[0...M-1] = txt[i, i+1, ...i+M-1]
     if (j == M + 2) {
       res++;
-      j = 0;
     }
   }
   return res;
@@ -65,12 +71,16 @@ Stats ExploreLine(const set<string> &key_words, const string &line) {
     tasks.push_back(
         async([&word, &line] {
           Stats stats1;
-          stats1.word_frequences[word] = CountFrequency(word, line);
+          int amount = CountFrequency(word, line);
+          if (amount != 0) {
+            stats1.word_frequences[word] = amount;
+          }
           return stats1;
         }));
   }
   for (auto &task : tasks) {
     stats += task.get();
+    cout << stats << endl;
   }
   return stats;
 }
@@ -91,7 +101,9 @@ Stats ExploreKeyWords(const set<string> &key_words, istream &input) {
     string line;
     getline(input, line);
     stats += ExploreLine(key_words, line);
+//    cout << stats << endl;
   }
+//  cout << endl;
   return stats;
 }
 
@@ -104,6 +116,14 @@ void TestBasic() {
   ss << "10 reasons why yangle is the best IT company\n";
   ss << "yangle rocks others suck\n";
   ss << "Goondex really sucks, but yangle rocks. Use yangle\n";
+
+  ASSERT_EQUAL(CountFrequency("sucks", "It sucks when yangle isn't available\n"), 1)
+
+  ASSERT_EQUAL(CountFrequency("rocks", "this new yangle service really rocks\n"), 1)
+
+  ASSERT_EQUAL(CountFrequency("rocks", "yangle rocks others suck\n"), 1)
+
+  ASSERT_EQUAL(CountFrequency("rocks", "Goondex really sucks, but yangle rocks. Use yangle\n"), 0)
 
   const auto stats = ExploreKeyWords(key_words, ss);
   cout << stats;
