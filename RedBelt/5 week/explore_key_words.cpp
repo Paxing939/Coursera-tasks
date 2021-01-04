@@ -6,7 +6,9 @@
 #include <map>
 
 #ifdef _WIN32
+
 #include <Windows.h>
+
 #else
 #include <unistd.h>
 #endif
@@ -22,10 +24,10 @@ struct Stats {
     }
   }
 
-  friend ostream &operator<<(ostream &, Stats);
+  friend ostream &operator<<(ostream &, const Stats &);
 };
 
-ostream &operator<<(ostream &out, Stats stats) {
+ostream &operator<<(ostream &out, const Stats &stats) {
   for (auto &[key, value] : stats.word_frequences) {
     out << key << " - " << value << '\n';
   }
@@ -33,34 +35,29 @@ ostream &operator<<(ostream &out, Stats stats) {
 }
 
 int CountFrequency(const string &pat, const string &txt) {
-  int M = pat.length();
-  int N = txt.length();
-  int res = 0;
-
-  /* A loop to slide pat[] one by one */
-  for (int i = 0; i <= N - M; i++) {
-    /* For current index i, check for
-       pattern match */
-
-    int j = 0;
-    if (i + j == 0 || txt[i + j] == ' ' || txt[i + j] == '\n') {
-      ++j;
-      for (; j < M; j++) {
-        if (txt[i + j] != pat[j - 1])
-          break;
-      }
-      ++j;
-      if (i + j == txt.size() - 1 || txt[i + j] == ' ' || txt[i + j] == '\n') {
-        ++j;
-      }
-    }
-
-    // if pat[0...M-1] = txt[i, i+1, ...i+M-1]
-    if (j == M + 2) {
-      res++;
+  string_view str_view_txt(txt);
+  vector<string_view> refs;
+  int previous = 0;
+  for (int i = 0; i < txt.size(); ++i) {
+    if (txt[i] == ' ') {
+//      cerr << str_view_txt.substr(previous, i - previous) << '.' << endl;
+      refs.push_back(str_view_txt.substr(previous, i - previous));
+      previous = i + 1;
     }
   }
-  return res;
+  refs.push_back(str_view_txt.substr(previous, str_view_txt.size() - previous));
+  int counter = 0;
+//  cerr << endl;
+  for (auto ref : refs) {
+    if (ref.back() == '\n') {
+      ref = ref.substr(0, ref.size() - 1);
+    }
+//    cerr << ref << '.' << endl;
+    if (pat == ref) {
+      ++counter;
+    }
+  }
+  return counter;
 }
 
 Stats ExploreLine(const set<string> &key_words, const string &line) {
@@ -69,7 +66,7 @@ Stats ExploreLine(const set<string> &key_words, const string &line) {
   tasks.reserve(key_words.size());
   for (const auto &word : key_words) {
     tasks.push_back(
-        async([&word, &line] {
+        async([word, &line] {
           Stats stats1;
           int amount = CountFrequency(word, line);
           if (amount != 0) {
@@ -78,9 +75,8 @@ Stats ExploreLine(const set<string> &key_words, const string &line) {
           return stats1;
         }));
   }
-  for (auto &task : tasks) {
+  for (auto &&task : tasks) {
     stats += task.get();
-    cout << stats << endl;
   }
   return stats;
 }
@@ -101,9 +97,7 @@ Stats ExploreKeyWords(const set<string> &key_words, istream &input) {
     string line;
     getline(input, line);
     stats += ExploreLine(key_words, line);
-//    cout << stats << endl;
   }
-//  cout << endl;
   return stats;
 }
 
@@ -118,15 +112,20 @@ void TestBasic() {
   ss << "Goondex really sucks, but yangle rocks. Use yangle\n";
 
   ASSERT_EQUAL(CountFrequency("sucks", "It sucks when yangle isn't available\n"), 1)
-
   ASSERT_EQUAL(CountFrequency("rocks", "this new yangle service really rocks\n"), 1)
-
   ASSERT_EQUAL(CountFrequency("rocks", "yangle rocks others suck\n"), 1)
-
+  ASSERT_EQUAL(CountFrequency("yangle", "yangle rocks others suck\n"), 1)
+  ASSERT_EQUAL(CountFrequency("suck", "yangle rocks others suck\n"), 1)
   ASSERT_EQUAL(CountFrequency("rocks", "Goondex really sucks, but yangle rocks. Use yangle\n"), 0)
 
+  const map<string, int> expected1 = {
+      {"yangle", 1},
+      {"rocks",  1},
+      {"sucks",  1}
+  };
+  ASSERT_EQUAL(ExploreLine(key_words, "yangle rocks others sucks\n").word_frequences, expected1);
+
   const auto stats = ExploreKeyWords(key_words, ss);
-  cout << stats;
   const map<string, int> expected = {
       {"yangle", 6},
       {"rocks",  2},
