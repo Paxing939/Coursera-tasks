@@ -10,7 +10,9 @@
 #include <Windows.h>
 
 #else
+
 #include <unistd.h>
+
 #endif
 
 using namespace std;
@@ -23,16 +25,7 @@ struct Stats {
       word_frequences[key] += value;
     }
   }
-
-  friend ostream &operator<<(ostream &, const Stats &);
 };
-
-ostream &operator<<(ostream &out, const Stats &stats) {
-  for (auto &[key, value] : stats.word_frequences) {
-    out << key << " - " << value << '\n';
-  }
-  return out;
-}
 
 int CountFrequency(const string &pat, const string &txt) {
   string_view str_view_txt(txt);
@@ -40,19 +33,16 @@ int CountFrequency(const string &pat, const string &txt) {
   int previous = 0;
   for (int i = 0; i < txt.size(); ++i) {
     if (txt[i] == ' ') {
-//      cerr << str_view_txt.substr(previous, i - previous) << '.' << endl;
       refs.push_back(str_view_txt.substr(previous, i - previous));
       previous = i + 1;
     }
   }
   refs.push_back(str_view_txt.substr(previous, str_view_txt.size() - previous));
   int counter = 0;
-//  cerr << endl;
   for (auto ref : refs) {
     if (ref.back() == '\n') {
       ref = ref.substr(0, ref.size() - 1);
     }
-//    cerr << ref << '.' << endl;
     if (pat == ref) {
       ++counter;
     }
@@ -62,28 +52,18 @@ int CountFrequency(const string &pat, const string &txt) {
 
 Stats ExploreLine(const set<string> &key_words, const string &line) {
   Stats stats;
-  vector<future<Stats>> tasks;
-  tasks.reserve(key_words.size());
+
   for (const auto &word : key_words) {
-    tasks.push_back(
-        async([word, &line] {
-          Stats stats1;
-          int amount = CountFrequency(word, line);
-          if (amount != 0) {
-            stats1.word_frequences[word] = amount;
-          }
-          return stats1;
-        }));
+    int enters_amount = CountFrequency(word, line);
+    if (enters_amount != 0) {
+      stats.word_frequences[word] = enters_amount;
+    }
   }
-  for (auto &&task : tasks) {
-    stats += task.get();
-  }
+
   return stats;
 }
 
-Stats ExploreKeyWordsSingleThread(
-    const set<string> &key_words, istream &input
-) {
+Stats ExploreKeyWordsSingleThread(const set<string> &key_words, istream &input) {
   Stats result;
   for (string line; getline(input, line);) {
     result += ExploreLine(key_words, line);
@@ -92,12 +72,26 @@ Stats ExploreKeyWordsSingleThread(
 }
 
 Stats ExploreKeyWords(const set<string> &key_words, istream &input) {
+  vector<future<Stats>> jobs;
   Stats stats;
   while (!input.eof()) {
     string line;
     getline(input, line);
-    stats += ExploreLine(key_words, line);
+    jobs.push_back(async([&key_words, &line] {
+      return ExploreLine(key_words, line);
+    }));
   }
+
+  vector<Stats> stats_vector;
+  stats_vector.reserve(jobs.size());
+  for (auto &job : jobs) {
+    stats_vector.push_back(job.get());
+  }
+
+  for (const auto &stat : stats_vector) {
+    stats += stat;
+  }
+
   return stats;
 }
 
