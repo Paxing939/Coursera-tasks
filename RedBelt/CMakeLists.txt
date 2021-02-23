@@ -8,4 +8,4 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address,undefined")
 
-add_executable(RedBelt "5 week/synchronized.cpp")
+add_executable(RedBelt "5 week/ConcurrentMap.cpp")
