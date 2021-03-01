@@ -10,37 +10,51 @@
 
 using namespace std;
 
+template<typename T>
+struct Access {
+  lock_guard<mutex> guard;
+  T &ref_to_value;
+};
+
 template<typename K, typename V>
 class ConcurrentMap {
 public:
   static_assert(is_integral_v<K>, "ConcurrentMap supports only integer keys");
 
-  struct Access {
-    lock_guard<mutex> guard;
-    V &ref_to_value;
+  class Bucket {
+  public:
+
+    Access<V> operator[](const K &key) {
+      return {lock_guard(m1), data_[key]};
+    }
+
+    Access<map<K, V>> GetMapAccess() {
+      return {lock_guard(m1), data_};
+    }
+
+  private:
+    mutex m1;
+    map<K, V> data_;
   };
 
-  explicit ConcurrentMap(size_t bucket_count) : mutexes(bucket_count), buckets(bucket_count) {}
+  explicit ConcurrentMap(size_t bucket_count) : buckets(bucket_count) {}
 
-  Access operator[](const K &key) {
+  Access<V> operator[](const K &key) {
     int bucket_index = abs(static_cast<int>(key)) % static_cast<int>(buckets.size());
-    lock_guard lock(mutexes[bucket_index]);
-    return {lock_guard(m), buckets[bucket_index][key]};
+    return buckets[bucket_index][key];
   }
 
   map<K, V> BuildOrdinaryMap() {
     map<K, V> result;
     for (int i = 0; i < buckets.size(); ++i) {
-      lock_guard lock(mutexes[i]);
-      result.insert(buckets[i].begin(), buckets[i].end());
+      auto access = buckets[i].GetMapAccess();
+      result.insert(access.ref_to_value.begin(), access.ref_to_value.end());
     }
     return result;
   }
 
 private:
-  vector<mutex> mutexes;
-  mutex m;
-  vector<map<K, V>> buckets;
+  vector<Bucket> buckets;
 };
 
 void RunConcurrentUpdates(ConcurrentMap<int, int> &cm, size_t thread_count, int key_count) {
