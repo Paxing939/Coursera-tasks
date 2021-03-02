@@ -2,4 +2,7 @@ cmake-build-debug/*
 cmake-build-debug/
 YellowBelt/.idea
 WhiteBelt/.idea
+RedBelt/.idea
 cmake-build-debug/CMakeFiles/
+RedBelt/6 week/documents.txt
+RedBelt/6 week/requests.txt
