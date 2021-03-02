@@ -295,21 +295,23 @@ void TestTime() {
     srv.UpdateDocumentBase(docs_input);
   }
   {
-    LOG_DURATION("Test AddQueriesStream time")
-    ostringstream queries_output;
-    srv.AddQueriesStream(queries_input, queries_output);
+//    LOG_DURATION("Test AddQueriesStream time")
+//    ostringstream queries_output;
+//    srv.AddQueriesStream(queries_input, queries_output);
   }
 
 }
 
 int main() {
-  TestRunner tr;
-  RUN_TEST(tr, TestSerpFormat);
-  RUN_TEST(tr, TestTop5);
-  RUN_TEST(tr, TestHitcount);
-  RUN_TEST(tr, TestRanking);
-  RUN_TEST(tr, TestBasicSearch);
-  RUN_TEST(tr, TestTime);
+  for (int i = 0; i < 20; ++i) {
+    TestRunner tr;
+//    RUN_TEST(tr, TestSerpFormat);
+//    RUN_TEST(tr, TestTop5);
+//    RUN_TEST(tr, TestHitcount);
+//    RUN_TEST(tr, TestRanking);
+//    RUN_TEST(tr, TestBasicSearch);
+    RUN_TEST(tr, TestTime);
+  }
 
 //  CustomDocumentsRequestsGenerator();
 }
