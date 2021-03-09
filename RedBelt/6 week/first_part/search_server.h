@@ -22,7 +22,7 @@ public:
   }
 
 private:
-  map<string, list<size_t>> index;
+  unordered_map<string, list<size_t>> index;
   vector<string> docs;
 };
 
