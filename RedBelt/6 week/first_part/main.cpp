@@ -256,12 +256,12 @@ stringstream GenerateDocuments(const vector<string> &words, const size_t words_p
 }
 
 void CustomDocumentsRequestsGenerator() {
-  const size_t documents_amount = 25'000;
-  const size_t words_per_document_amount = 1'000;
-  const size_t unique_words_amount = 15'000;
-  const size_t max_word_length = 50;
-  const size_t requests_amount = 500'000;
-  const size_t request_length = 10;
+  const size_t documents_amount = 10;
+  const size_t words_per_document_amount = 10;
+  const size_t unique_words_amount = 20;
+  const size_t max_word_length = 5;
+  const size_t requests_amount = 5;
+  const size_t request_length = 3;
 
   vector<string> words = GenerateWords(unique_words_amount, max_word_length);
   stringstream ss = move(GenerateDocuments(words, words_per_document_amount, documents_amount));
@@ -272,7 +272,7 @@ void CustomDocumentsRequestsGenerator() {
 
   random_device random_device;
   mt19937 random_engine(random_device());
-  uniform_int_distribution<int> distribution_1_100(1, unique_words_amount);
+  uniform_int_distribution<int> distribution_1_100(1, unique_words_amount - 1);
   writer.open("../6 week/requests.txt");
   for (int i = 0; i < requests_amount; ++i) {
     string request;
@@ -302,16 +302,38 @@ void TestTime() {
 
 }
 
-int main() {
-//  for (int i = 0; i < 20; ++i) {
-    TestRunner tr;
-//    RUN_TEST(tr, TestSerpFormat);
-//    RUN_TEST(tr, TestTop5);
-//    RUN_TEST(tr, TestHitcount);
-//    RUN_TEST(tr, TestRanking);
-//    RUN_TEST(tr, TestBasicSearch);
-    RUN_TEST(tr, TestTime);
-//  }
+void TestAddQueriesStream() {
+  SearchServer srv;
+  vector<string> documents = {"u are cute"s,          // 0
+                              "u are good person"s,   // 1
+                              "i am cute"s,           // 2
+                              "i am good person"s,    // 3
+                              "we are good"s,         // 4
+                              "we are cute"s,         // 5
+                              "she is ugly"s,         // 6
+                              "he is ugly"s};         // 7
 
-//  CustomDocumentsRequestsGenerator();
+  vector<string> requests = {"are cute\n"s};
+//                     "we i good person\n"s +
+//                     "we i cute\n"s;
+  vector<string> expected = {"are cute: {docid: 0, hitcount: 2} {docid: 5, hitcount: 2} {docid: 1, hitcount: 1}"s +
+                             " {docid: 2, hitcount: 1} {docid: 4, hitcount: 1}"s,};
+//                             "we i good person:",
+//                             "we i cute: {docid: 3, hitcount: 2}",};
+  TestFunctionality(documents, requests, expected);
+}
+
+int main() {
+
+//  for (int i = 0; i < 200; ++i) {
+//    CustomDocumentsRequestsGenerator();
+    TestRunner tr;
+    RUN_TEST(tr, TestSerpFormat);
+    RUN_TEST(tr, TestTop5);
+    RUN_TEST(tr, TestHitcount);
+    RUN_TEST(tr, TestRanking);
+    RUN_TEST(tr, TestBasicSearch);
+    RUN_TEST(tr, TestTime);
+    RUN_TEST(tr, TestAddQueriesStream);
+//  }
 }

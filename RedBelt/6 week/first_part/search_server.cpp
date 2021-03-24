@@ -11,6 +11,17 @@ vector<string> SplitIntoWords(const string &line) {
   return {istream_iterator<string>(words_input), istream_iterator<string>()};
 }
 
+vector<string_view> SplitIntoWords(string_view str, const string &delimiter) {
+  size_t pos;
+  vector<string_view> result;
+  while ((pos = str.find(delimiter)) != string::npos) {
+    result.push_back(str.substr(0, pos));
+    str = str.substr(pos + delimiter.size());
+  }
+  result.emplace_back(str);
+  return result;
+}
+
 SearchServer::SearchServer(istream &document_input) {
   UpdateDocumentBase(document_input);
 }
@@ -19,10 +30,19 @@ void SearchServer::UpdateDocumentBase(istream &document_input) {
   InvertedIndex new_index;
 
   for (string current_document; getline(document_input, current_document);) {
-    new_index.Add(move(current_document));
+    new_index.Add(current_document);
   }
 
   index = move(new_index);
+}
+
+struct Res {
+  int doc_id;
+  int hit_count;
+};
+
+bool operator==(const Res &lhs, const Res &rhs) {
+  return lhs.doc_id == rhs.doc_id && lhs.hit_count == rhs.hit_count;
 }
 
 void SearchServer::AddQueriesStream(istream &query_input, ostream &search_results_output) {
@@ -65,12 +85,12 @@ void InvertedIndex::Add(const string &document) {
   docs.push_back(document);
 
   const size_t docid = docs.size() - 1;
-  for (const auto &word : SplitIntoWords(document)) {
+  for (const auto &word : SplitIntoWords(docs.back(), " ")) {
     index[word].push_back(docid);
   }
 }
 
-list<size_t> InvertedIndex::Lookup(const string &word) const {
+list<size_t> InvertedIndex::Lookup(string_view word) const {
   if (auto it = index.find(word); it != index.end()) {
     return it->second;
   } else {

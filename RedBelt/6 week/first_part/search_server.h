@@ -1,10 +1,12 @@
 #pragma once
 
 #include <unordered_map>
+#include <string_view>
 #include <istream>
 #include <ostream>
 #include <vector>
 #include <string>
+#include <deque>
 #include <list>
 #include <set>
 #include <map>
@@ -15,15 +17,21 @@ class InvertedIndex {
 public:
   void Add(const string &document);
 
-  list<size_t> Lookup(const string &word) const;
+  list<size_t> Lookup(string_view word) const;
 
   const string &GetDocument(size_t id) const {
-    return docs[id];
+    int i = 0;
+    for (const auto &el : docs) {
+      if (i == id) {
+        return el;
+      }
+    }
+//    return docs[id];
   }
 
 private:
-  unordered_map<string, list<size_t>> index;
-  vector<string> docs;
+  unordered_map<string_view, list<size_t>> index;
+  list<string> docs;
 };
 
 class SearchServer {
