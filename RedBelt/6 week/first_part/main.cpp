@@ -256,12 +256,12 @@ stringstream GenerateDocuments(const vector<string> &words, const size_t words_p
 }
 
 void CustomDocumentsRequestsGenerator() {
-  const size_t documents_amount = 10;
-  const size_t words_per_document_amount = 10;
-  const size_t unique_words_amount = 20;
-  const size_t max_word_length = 5;
-  const size_t requests_amount = 5;
-  const size_t request_length = 3;
+  const size_t documents_amount = 50000;
+  const size_t words_per_document_amount = 50;
+  const size_t unique_words_amount = 1000;
+  const size_t max_word_length = 20;
+  const size_t requests_amount = 50000;
+  const size_t request_length = 10;
 
   vector<string> words = GenerateWords(unique_words_amount, max_word_length);
   stringstream ss = move(GenerateDocuments(words, words_per_document_amount, documents_amount));
@@ -323,17 +323,49 @@ void TestAddQueriesStream() {
   TestFunctionality(documents, requests, expected);
 }
 
+void CourseraTest() {
+  const vector<string> docs = {
+      "x x x y y y",
+      "x y z z z",
+      "y y z z",
+      "x x y y y y",
+      "x y z",
+      "x x x x y z",
+      "x x x x",
+  };
+
+  const vector<string> queries = {
+      "x",
+      "y",
+      "z",
+      "x y",
+      "x z",
+      "x y z",
+  };
+
+  const vector<string> expected = {
+      "x: {docid: 5, hitcount: 4} {docid: 6, hitcount: 4} {docid: 0, hitcount: 3} {docid: 3, hitcount: 2} {docid: 1, hitcount: 1}",
+      "y: {docid: 3, hitcount: 4} {docid: 0, hitcount: 3} {docid: 2, hitcount: 2} {docid: 1, hitcount: 1} {docid: 4, hitcount: 1}",
+      "z: {docid: 1, hitcount: 3} {docid: 2, hitcount: 2} {docid: 4, hitcount: 1} {docid: 5, hitcount: 1}",
+      "x y: {docid: 0, hitcount: 6} {docid: 3, hitcount: 6} {docid: 5, hitcount: 5} {docid: 6, hitcount: 4} {docid: 1, hitcount: 2}",
+      "x z: {docid: 5, hitcount: 5} {docid: 1, hitcount: 4} {docid: 6, hitcount: 4} {docid: 0, hitcount: 3} {docid: 2, hitcount: 2}",
+      "x y z: {docid: 0, hitcount: 6} {docid: 3, hitcount: 6} {docid: 5, hitcount: 6} {docid: 1, hitcount: 5} {docid: 2, hitcount: 4}",
+  };
+  TestFunctionality(docs, queries, expected);
+}
+
 int main() {
 
 //  for (int i = 0; i < 200; ++i) {
 //    CustomDocumentsRequestsGenerator();
-    TestRunner tr;
-    RUN_TEST(tr, TestSerpFormat);
-    RUN_TEST(tr, TestTop5);
-    RUN_TEST(tr, TestHitcount);
-    RUN_TEST(tr, TestRanking);
-    RUN_TEST(tr, TestBasicSearch);
-    RUN_TEST(tr, TestTime);
-    RUN_TEST(tr, TestAddQueriesStream);
+  TestRunner tr;
+  RUN_TEST(tr, TestSerpFormat);
+  RUN_TEST(tr, TestTop5);
+  RUN_TEST(tr, TestHitcount);
+  RUN_TEST(tr, TestRanking);
+  RUN_TEST(tr, TestBasicSearch);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestAddQueriesStream);
+  RUN_TEST(tr, CourseraTest);
 //  }
 }

@@ -1,0 +1,38 @@
+Failed case #9/11: (Wrong answer)
+request #0:       `x: {docid: 5, hitcount: 4} {docid: 0, hitcount: 3} {docid: 3, hitcount: 2} {docid: 1, hitcount: 1} {docid: 4, hitcount: 1}`
+expected, but got `x: {docid: 5, hitcount: 4} {docid: 6, hitcount: 4} {docid: 0, hitcount: 3} {docid: 3, hitcount: 2} {docid: 1, hitcount: 1}`
+Input:
+stdin
+7 6
+
+x x x y y y
+x y z z z
+y y z z
+x x y y y y
+x y z
+x x x x y z
+x x x x
+
+x
+y
+z
+x y
+x z
+x y z
+
+Your output:
+x: {docid: 5, hitcount: 4} {docid: 0, hitcount: 3} {docid: 3, hitcount: 2} {docid: 1, hitcount: 1} {docid: 4, hitcount: 1}
+y: {docid: 3, hitcount: 4} {docid: 0, hitcount: 3} {docid: 2, hitcount: 2} {docid: 1, hitcount: 1} {docid: 4, hitcount: 1}
+z: {docid: 1, hitcount: 3} {docid: 2, hitcount: 2} {docid: 4, hitcount: 1} {docid: 5, hitcount: 1}
+x y: {docid: 0, hitcount: 6} {docid: 3, hitcount: 6} {docid: 5, hitcount: 5} {docid: 1, hitcount: 2} {docid: 4, hitcount: 2}
+x z: {docid: 5, hitcount: 5} {docid: 1, hitcount: 4} {docid: 0, hitcount: 3} {docid: 3, hitcount: 2} {docid: 4, hitcount: 2}
+x y z: {docid: 0, hitcount: 6} {docid: 3, hitcount: 6} {docid: 5, hitcount: 6} {docid: 1, hitcount: 5} {docid: 4, hitcount: 3}
+
+Correct output:
+x: {docid: 5, hitcount: 4} {docid: 6, hitcount: 4} {docid: 0, hitcount: 3} {docid: 3, hitcount: 2} {docid: 1, hitcount: 1}
+y: {docid: 3, hitcount: 4} {docid: 0, hitcount: 3} {docid: 2, hitcount: 2} {docid: 1, hitcount: 1} {docid: 4, hitcount: 1}
+z: {docid: 1, hitcount: 3} {docid: 2, hitcount: 2} {docid: 4, hitcount: 1} {docid: 5, hitcount: 1}
+x y: {docid: 0, hitcount: 6} {docid: 3, hitcount: 6} {docid: 5, hitcount: 5} {docid: 6, hitcount: 4} {docid: 1, hitcount: 2}
+x z: {docid: 5, hitcount: 5} {docid: 1, hitcount: 4} {docid: 6, hitcount: 4} {docid: 0, hitcount: 3} {docid: 2, hitcount: 2}
+x y z: {docid: 0, hitcount: 6} {docid: 3, hitcount: 6} {docid: 5, hitcount: 6} {docid: 1, hitcount: 5} {docid: 2, hitcount: 4}
+ (Time used: 0.00/45.00, preprocess time used: 0/None, memory used: 9998336/805306368.)

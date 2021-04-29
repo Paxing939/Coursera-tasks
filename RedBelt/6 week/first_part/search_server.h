@@ -17,7 +17,7 @@ class InvertedIndex {
 public:
   void Add(const string &document);
 
-  list<size_t> Lookup(string_view word) const;
+  list<pair<size_t, size_t>>  Lookup(string_view word) const;
 
   const string &GetDocument(size_t id) const {
     int i = 0;
@@ -30,7 +30,7 @@ public:
   }
 
 private:
-  unordered_map<string_view, list<size_t>> index;
+  unordered_map<string_view, list<pair<size_t, size_t>>> index;
   list<string> docs;
 };
 
@@ -45,5 +45,10 @@ public:
   void AddQueriesStream(istream &query_input, ostream &search_results_output);
 
 private:
+
+  void UpdateHighFive(size_t doc_id, const unordered_map<size_t, size_t> &doc_id_count);
+
+  pair<size_t, size_t> five_minimum_ = {std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max()};
+  vector<pair<size_t, size_t>> high_five_;
   InvertedIndex index;
 };
