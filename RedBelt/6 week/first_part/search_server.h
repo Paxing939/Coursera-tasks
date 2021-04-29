@@ -46,7 +46,7 @@ public:
 
 private:
 
-  void UpdateHighFive(size_t doc_id, const unordered_map<size_t, size_t> &doc_id_count);
+  void UpdateHighFive(size_t doc_id, const unordered_map<size_t, size_t> &doc_id_count, size_t amount);
 
   pair<size_t, size_t> five_minimum_ = {std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max()};
   vector<pair<size_t, size_t>> high_five_;

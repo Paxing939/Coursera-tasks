@@ -54,7 +54,7 @@ void SearchServer::AddQueriesStream(istream &query_input, ostream &search_result
       auto tmp = index.Lookup(word);
       for (const auto &[doc_id, amount] : tmp) {
         docid_count[doc_id] += amount;
-        UpdateHighFive(doc_id, docid_count);
+        UpdateHighFive(doc_id, docid_count, amount);
       }
     }
 
@@ -80,10 +80,10 @@ void SearchServer::AddQueriesStream(istream &query_input, ostream &search_result
   }
 }
 
-void SearchServer::UpdateHighFive(size_t doc_id, const unordered_map<size_t, size_t> &doc_id_count) {
-  auto found = find(high_five_.begin(), high_five_.end(), pair{doc_id, doc_id_count.at(doc_id) - 1});
+void SearchServer::UpdateHighFive(size_t doc_id, const unordered_map<size_t, size_t> &doc_id_count, size_t amount) {
+  auto found = find(high_five_.begin(), high_five_.end(), pair{doc_id, doc_id_count.at(doc_id) - amount});
   if (found != high_five_.end()) {
-    ++found->second;
+    found->second += amount;
     if (five_minimum_.second > found->second) {
       five_minimum_ = *found;
     }
@@ -113,7 +113,7 @@ void InvertedIndex::Add(const string &document) {
 
   const size_t doc_id = docs.size() - 1;
   for (const auto &word : SplitIntoWords(docs.back(), " ")) {
-    if (index[word].empty() || index[word].back().first == doc_id) {
+    if (index[word].empty() || index[word].back().first < doc_id) {
       index[word].emplace_back(doc_id, 1);
     } else {
       ++index[word].back().second;
