@@ -358,14 +358,14 @@ int main() {
 
 //  for (int i = 0; i < 200; ++i) {
 //    CustomDocumentsRequestsGenerator();
-  TestRunner tr;
-  RUN_TEST(tr, TestSerpFormat);
-  RUN_TEST(tr, TestTop5);
-  RUN_TEST(tr, TestHitcount);
-  RUN_TEST(tr, TestRanking);
-  RUN_TEST(tr, TestBasicSearch);
-  RUN_TEST(tr, TestTime);
-  RUN_TEST(tr, TestAddQueriesStream);
-  RUN_TEST(tr, CourseraTest);
+//  TestRunner tr;
+//  RUN_TEST(tr, TestSerpFormat);
+//  RUN_TEST(tr, TestTop5);
+//  RUN_TEST(tr, TestHitcount);
+//  RUN_TEST(tr, TestRanking);
+//  RUN_TEST(tr, TestBasicSearch);
+//  RUN_TEST(tr, TestTime);
+//  RUN_TEST(tr, TestAddQueriesStream);
+//  RUN_TEST(tr, CourseraTest);
 //  }
 }
