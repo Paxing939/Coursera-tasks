@@ -17,21 +17,14 @@ class InvertedIndex {
 public:
   void Add(const string &document);
 
-  list<size_t>  Lookup(string_view word) const;
+  list<size_t> Lookup(string_view word) const;
 
-//  const string &GetDocument(size_t id) const {
-//    int i = 0;
-//    for (const auto &el : docs) {
-//      if (i == id) {
-//        return el;
-//      }
-//      ++i;
-//    }
-////    return docs[id];
-//  }
+
+  list<pair<size_t, size_t>> Lookup2(string_view word) const;
 
 private:
   unordered_map<string_view, list<size_t>> index;
+  unordered_map<string_view, list<pair<size_t, size_t>>> index2;
   list<string> docs;
 };
 
