@@ -256,11 +256,11 @@ stringstream GenerateDocuments(const vector<string> &words, const size_t words_p
 }
 
 void CustomDocumentsRequestsGenerator() {
-  const size_t documents_amount = 50000;
-  const size_t words_per_document_amount = 50;
-  const size_t unique_words_amount = 1000;
-  const size_t max_word_length = 20;
-  const size_t requests_amount = 50000;
+  const size_t documents_amount = 5000;
+  const size_t words_per_document_amount = 1000;
+  const size_t unique_words_amount = 15000;
+  const size_t max_word_length = 100;
+  const size_t requests_amount = 10'000;
   const size_t request_length = 10;
 
   vector<string> words = GenerateWords(unique_words_amount, max_word_length);
@@ -363,13 +363,13 @@ void CourseraTest_2() {
   };
 
   const vector<string> queries = {
-//      "a",
-//      "b",
-//      "c",
-//      "d",
-//      "e",
-//      "f",
-//      "g",
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
       "b  c   d  f",
       "cde g",
       " c d",
@@ -378,13 +378,13 @@ void CourseraTest_2() {
   };
 
   const vector<string> expected = {
-//      "a: {docid: 0, hitcount: 1} {docid: 1, hitcount: 1}",
-//      "b: {docid: 0, hitcount: 1} {docid: 1, hitcount: 1}",
-//      "c: {docid: 0, hitcount: 1} {docid: 1, hitcount: 1} {docid: 2, hitcount: 1}",
-//      "d: {docid: 0, hitcount: 1} {docid: 1, hitcount: 1} {docid: 2, hitcount: 1} {docid: 3, hitcount: 1}",
-//      "e: {docid: 2, hitcount: 1} {docid: 3, hitcount: 1}",
-//      "f: {docid: 2, hitcount: 1} {docid: 3, hitcount: 1}",
-//      "g: {docid: 3, hitcount: 1}",
+      "a: {docid: 0, hitcount: 1} {docid: 1, hitcount: 1}",
+      "b: {docid: 0, hitcount: 1} {docid: 1, hitcount: 1}",
+      "c: {docid: 0, hitcount: 1} {docid: 1, hitcount: 1} {docid: 2, hitcount: 1}",
+      "d: {docid: 0, hitcount: 1} {docid: 1, hitcount: 1} {docid: 2, hitcount: 1} {docid: 3, hitcount: 1}",
+      "e: {docid: 2, hitcount: 1} {docid: 3, hitcount: 1}",
+      "f: {docid: 2, hitcount: 1} {docid: 3, hitcount: 1}",
+      "g: {docid: 3, hitcount: 1}",
       "b  c   d  f: {docid: 0, hitcount: 3} {docid: 1, hitcount: 3} {docid: 2, hitcount: 3} {docid: 3, hitcount: 2}",
       "cde g: {docid: 3, hitcount: 1}",
       " c d: {docid: 0, hitcount: 2} {docid: 1, hitcount: 2} {docid: 2, hitcount: 2} {docid: 3, hitcount: 1}",
@@ -394,8 +394,47 @@ void CourseraTest_2() {
   TestFunctionality(docs, queries, expected);
 }
 
+void TestOneWordHitsQueries() {
+  const vector<string> docs = {
+      "hello", // 0
+      "hmmmmp", // 1
+      "hmmmmp", // 2
+      "hmmmmp", // 3
+      "hmmmmp", // 4
+      "there", // 5
+      "general",
+      "hmmmmp",// 7
+      "hmmmmp",
+      "hmmmmp",// 9
+      "hmmmmp",
+      "kenobi",// 11
+      "hmmmmp",
+      "hmmmmp", // 13
+      "hmmmmp",
+      "hmmmmp", // 15
+      "sdsdf",
+      "hmmmmp", // 17
+      "hmmmmp",
+      "hmmmmp", // 19
+  };
+  const vector<string> queries = {"hmmmmp b",};
+  const vector<string> expected = {
+      Join(' ', vector{
+          "hmmmmp b:",
+          "{docid: 1, hitcount: 1}",
+          "{docid: 2, hitcount: 1}",
+          "{docid: 3, hitcount: 1}",
+          "{docid: 4, hitcount: 1}",
+          "{docid: 7, hitcount: 1}",
+      }),
+  };
+
+  TestFunctionality(docs, queries, expected);
+}
+
 int main() {
-//    CustomDocumentsRequestsGenerator();
+//  CustomDocumentsRequestsGenerator();
+
   TestRunner tr;
 //  RUN_TEST(tr, TestSerpFormat);
 //  RUN_TEST(tr, TestTop5);
@@ -403,7 +442,16 @@ int main() {
 //  RUN_TEST(tr, TestRanking);
 //  RUN_TEST(tr, TestBasicSearch);
   RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
 //  RUN_TEST(tr, TestAddQueriesStream);
 //  RUN_TEST(tr, CourseraTest);
 //  RUN_TEST(tr, CourseraTest_2);
+//  RUN_TEST(tr, TestOneWordHitsQueries);
 }

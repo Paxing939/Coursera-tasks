@@ -15,17 +15,14 @@ using namespace std;
 
 class InvertedIndex {
 public:
-  void Add(const string &document);
+  void Add(string document);
 
-  list<size_t> Lookup(string_view word) const;
-
-
-  list<pair<size_t, size_t>> Lookup2(string_view word) const;
+  const vector<ushort> & Lookup(string_view word);
 
 private:
-  unordered_map<string_view, list<size_t>> index;
-  unordered_map<string_view, list<pair<size_t, size_t>>> index2;
-  list<string> docs;
+  unordered_map<string_view, vector<ushort>> index;
+  deque<string> docs;
+  vector<ushort> false_vector;
 };
 
 class SearchServer {
@@ -39,10 +36,5 @@ public:
   void AddQueriesStream(istream &query_input, ostream &search_results_output);
 
 private:
-
-  void UpdateHighFive(size_t doc_id, const vector<size_t> &doc_id_count);
-
-  pair<size_t, size_t> five_minimum_ = {std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max()};
-  vector<pair<size_t, size_t>> high_five_;
   InvertedIndex index;
 };
