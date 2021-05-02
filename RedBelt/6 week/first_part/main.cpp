@@ -209,7 +209,7 @@ string GenerateRandomWord(const size_t word_length) {
   string tmp_s, alphanum = "abcdefghijklmnopqrstuvwxyz";
   tmp_s.reserve(word_length);
   for (int i = 0; i < word_length; ++i) {
-    uniform_int_distribution<int> distribution_1_100(1, alphanum.size());
+    uniform_int_distribution<size_t> distribution_1_100(0, alphanum.size() - 1);
     size_t random_number = distribution_1_100(random_engine);
     tmp_s += alphanum[random_number];
   }
@@ -256,14 +256,14 @@ stringstream GenerateDocuments(const vector<string> &words, const size_t words_p
 }
 
 void CustomDocumentsRequestsGenerator() {
-  const size_t documents_amount = 5000;
+  const size_t documents_amount = 800;
   const size_t words_per_document_amount = 1000;
   const size_t unique_words_amount = 15000;
   const size_t max_word_length = 100;
-  const size_t requests_amount = 10'000;
+  const size_t requests_amount = 300'000;
   const size_t request_length = 10;
 
-  vector<string> words = GenerateWords(unique_words_amount, max_word_length);
+  vector<string> words = move(GenerateWords(unique_words_amount, max_word_length));
   stringstream ss = move(GenerateDocuments(words, words_per_document_amount, documents_amount));
 
   ofstream writer("../6 week/documents.txt");
@@ -272,7 +272,7 @@ void CustomDocumentsRequestsGenerator() {
 
   random_device random_device;
   mt19937 random_engine(random_device());
-  uniform_int_distribution<int> distribution_1_100(1, unique_words_amount - 1);
+  uniform_int_distribution<int> distribution_1_100(0, unique_words_amount - 1);
   writer.open("../6 week/requests.txt");
   for (int i = 0; i < requests_amount; ++i) {
     string request;
@@ -299,7 +299,19 @@ void TestTime() {
     ostringstream queries_output;
     srv.AddQueriesStream(queries_input, queries_output);
   }
+}
 
+void TestAllTime() {
+  ifstream docs_input("../6 week/documents.txt");
+  ifstream queries_input("../6 week/requests.txt");
+
+  {
+    LOG_DURATION("Test whole time")
+    SearchServer srv;
+    srv.UpdateDocumentBase(docs_input);
+    ostringstream queries_output;
+    srv.AddQueriesStream(queries_input, queries_output);
+  }
 }
 
 void TestAddQueriesStream() {
@@ -434,22 +446,23 @@ void TestOneWordHitsQueries() {
 
 int main() {
 //  CustomDocumentsRequestsGenerator();
-
-  TestRunner tr;
+//
+//  TestRunner tr;
 //  RUN_TEST(tr, TestSerpFormat);
 //  RUN_TEST(tr, TestTop5);
 //  RUN_TEST(tr, TestHitcount);
 //  RUN_TEST(tr, TestRanking);
 //  RUN_TEST(tr, TestBasicSearch);
-  RUN_TEST(tr, TestTime);
-  RUN_TEST(tr, TestTime);
-  RUN_TEST(tr, TestTime);
-  RUN_TEST(tr, TestTime);
-  RUN_TEST(tr, TestTime);
-  RUN_TEST(tr, TestTime);
-  RUN_TEST(tr, TestTime);
-  RUN_TEST(tr, TestTime);
-  RUN_TEST(tr, TestTime);
+//  RUN_TEST(tr, TestTime);
+//  RUN_TEST(tr, TestAllTime);
+//  RUN_TEST(tr, TestTime);
+//  RUN_TEST(tr, TestTime);
+//  RUN_TEST(tr, TestTime);
+//  RUN_TEST(tr, TestTime);
+//  RUN_TEST(tr, TestTime);
+//  RUN_TEST(tr, TestTime);
+//  RUN_TEST(tr, TestTime);
+//  RUN_TEST(tr, TestTime);
 //  RUN_TEST(tr, TestAddQueriesStream);
 //  RUN_TEST(tr, CourseraTest);
 //  RUN_TEST(tr, CourseraTest_2);

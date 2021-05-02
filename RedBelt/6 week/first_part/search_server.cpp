@@ -59,12 +59,12 @@ void SearchServer::AddQueriesStream(istream &query_input, ostream &search_result
 
   for (string current_query; getline(query_input, current_query);) {
     {
-      ADD_DURATION(split);
-      const auto words = SplitIntoWords(current_query, " ");
+//      ADD_DURATION(split);
+//      const auto words = SplitIntoWords(current_query, " ");
     }
     const auto words = SplitIntoWords(current_query, " ");
     {
-      ADD_DURATION(cycle);
+//      ADD_DURATION(cycle);
       for (const auto &word : words) {
         if (!word.empty()) {
           vector<ushort> tmp = index.Lookup(word);
@@ -77,7 +77,7 @@ void SearchServer::AddQueriesStream(istream &query_input, ostream &search_result
       }
     }
     {
-      ADD_DURATION(sort);
+//      ADD_DURATION(sort);
       partial_sort(
           begin(indexes),
           begin(indexes) + 5,
@@ -92,7 +92,7 @@ void SearchServer::AddQueriesStream(istream &query_input, ostream &search_result
       );
     }
     {
-      ADD_DURATION(out);
+//      ADD_DURATION(out);
       search_results_output << current_query << ':';
       int i = 0;
       for (auto doc_id : indexes) {
@@ -111,7 +111,7 @@ void SearchServer::AddQueriesStream(istream &query_input, ostream &search_result
     }
 
     {
-      ADD_DURATION(free);
+//      ADD_DURATION(free);
       docid_count.clear();
       docid_count.resize(50000);
     }
