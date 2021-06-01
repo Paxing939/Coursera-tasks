@@ -256,11 +256,11 @@ stringstream GenerateDocuments(const vector<string> &words, const size_t words_p
 }
 
 void CustomDocumentsRequestsGenerator() {
-  const size_t documents_amount = 800;
-  const size_t words_per_document_amount = 1000;
+  const size_t documents_amount = 50'000;
+  const size_t words_per_document_amount = 50;
   const size_t unique_words_amount = 15000;
   const size_t max_word_length = 100;
-  const size_t requests_amount = 300'000;
+  const size_t requests_amount = 50'000;
   const size_t request_length = 10;
 
   vector<string> words = move(GenerateWords(unique_words_amount, max_word_length));
@@ -446,25 +446,27 @@ void TestOneWordHitsQueries() {
 
 int main() {
 //  CustomDocumentsRequestsGenerator();
-//
-//  TestRunner tr;
-//  RUN_TEST(tr, TestSerpFormat);
-//  RUN_TEST(tr, TestTop5);
-//  RUN_TEST(tr, TestHitcount);
-//  RUN_TEST(tr, TestRanking);
-//  RUN_TEST(tr, TestBasicSearch);
+
+  TestRunner tr;
+  RUN_TEST(tr, TestSerpFormat);
+  RUN_TEST(tr, TestTop5);
+  RUN_TEST(tr, TestHitcount);
+  RUN_TEST(tr, TestRanking);
+  RUN_TEST(tr, TestBasicSearch);
+  RUN_TEST(tr, TestAddQueriesStream);
+  RUN_TEST(tr, CourseraTest);
+  RUN_TEST(tr, CourseraTest_2);
+  RUN_TEST(tr, TestOneWordHitsQueries);
+
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestAllTime);
+  RUN_TEST(tr, TestTime);
+
 //  RUN_TEST(tr, TestTime);
-//  RUN_TEST(tr, TestAllTime);
 //  RUN_TEST(tr, TestTime);
 //  RUN_TEST(tr, TestTime);
 //  RUN_TEST(tr, TestTime);
 //  RUN_TEST(tr, TestTime);
 //  RUN_TEST(tr, TestTime);
 //  RUN_TEST(tr, TestTime);
-//  RUN_TEST(tr, TestTime);
-//  RUN_TEST(tr, TestTime);
-//  RUN_TEST(tr, TestAddQueriesStream);
-//  RUN_TEST(tr, CourseraTest);
-//  RUN_TEST(tr, CourseraTest_2);
-//  RUN_TEST(tr, TestOneWordHitsQueries);
 }

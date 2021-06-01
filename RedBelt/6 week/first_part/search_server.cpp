@@ -46,75 +46,82 @@ bool operator==(const Res &lhs, const Res &rhs) {
 void SearchServer::AddQueriesStream(istream &query_input, ostream &search_results_output) {
   TotalDuration split("split");
   TotalDuration cycle("cycle");
+  TotalDuration rewrite_vector("rewrite_vector");
   TotalDuration sort("sort");
   TotalDuration out("out");
   TotalDuration free("free");
 
 
-  vector<ushort> docid_count(50000);
-  vector<ushort> indexes(50000);
-  for (int i = 0; i < indexes.size(); ++i) {
-    indexes[i] = i;
-  }
+  vector<size_t> docid_count(50000);
+  vector<size_t> indexes(50000);
 
   for (string current_query; getline(query_input, current_query);) {
     {
-//      ADD_DURATION(split);
-//      const auto words = SplitIntoWords(current_query, " ");
+      ADD_DURATION(split);
+      const auto words = SplitIntoWords(current_query, " ");
     }
     const auto words = SplitIntoWords(current_query, " ");
+    size_t i = 0;
     {
-//      ADD_DURATION(cycle);
+      ADD_DURATION(cycle);
       for (const auto &word : words) {
         if (!word.empty()) {
-          vector<ushort> tmp = index.Lookup(word);
-          if (!tmp.empty()) {
-            for (const auto &doc_id : tmp) {
-              ++docid_count[doc_id];
+          vector<size_t> tmp = index.Lookup(word);
+          for (const auto &doc_id : tmp) {
+            if (docid_count[doc_id] == 0) {
+              indexes[i++] = doc_id;
             }
+            ++docid_count[doc_id];
           }
         }
       }
     }
+
+    std::vector<std::pair<size_t, size_t>> search_result;
     {
-//      ADD_DURATION(sort);
-      partial_sort(
-          begin(indexes),
-          begin(indexes) + 5,
-          end(indexes),
-          [&docid_count](ushort lhs, ushort rhs) {
-            int64_t lhs_docid = lhs;
-            auto lhs_hit_count = docid_count[lhs];
-            int64_t rhs_docid = rhs;
-            auto rhs_hit_count = docid_count[rhs];
+      ADD_DURATION(rewrite_vector);
+      for (size_t docid = 0; docid < i; ++docid) {
+//        size_t count = 0;
+//        size_t id = 0;
+//        std::swap(count, docid_count[indexes[docid]]);
+//        std::swap(id, indexes[docid]);
+        search_result.emplace_back(indexes[docid], docid_count[indexes[docid]]);
+      }
+    }
+
+    const size_t ANSWERS_COUNT = 5;
+    {
+      ADD_DURATION(sort);
+      std::partial_sort(
+          begin(search_result),
+          begin(search_result) + min(ANSWERS_COUNT, search_result.size()),
+          end(search_result),
+          [](pair<size_t, size_t> lhs, pair<size_t, size_t> rhs) {
+            int64_t lhs_docid = lhs.first;
+            auto lhs_hit_count = lhs.second;
+            int64_t rhs_docid = rhs.first;
+            auto rhs_hit_count = rhs.second;
             return make_pair(lhs_hit_count, -lhs_docid) > make_pair(rhs_hit_count, -rhs_docid);
           }
       );
     }
     {
-//      ADD_DURATION(out);
+      ADD_DURATION(out);
       search_results_output << current_query << ':';
-      int i = 0;
-      for (auto doc_id : indexes) {
-        size_t hit_count = docid_count[doc_id];
-        if (hit_count != 0) {
-          search_results_output << " {"
-                                << "docid: " << doc_id << ", "
-                                << "hitcount: " << hit_count << '}';
-        }
-        ++i;
-        if (i == 5) {
-          break;
-        }
+      for (auto[docid, hitcount] : Head(search_result, ANSWERS_COUNT)) {
+        search_results_output << " {"
+                              << "docid: " << docid << ", "
+                              << "hitcount: " << hitcount << '}';
       }
       search_results_output << endl;
     }
 
     {
-//      ADD_DURATION(free);
+      ADD_DURATION(free);
       docid_count.clear();
       docid_count.resize(50000);
     }
+
   }
 }
 
@@ -124,14 +131,14 @@ void InvertedIndex::Add(string document) {
   const size_t doc_id = docs.size() - 1;
   for (const auto &word : SplitIntoWords(docs.back(), " ")) {
     auto &t = index[word];
-    if (t.empty()) {
-      index[string(word)].reserve(50000);
-    }
+//    if (t.empty()) {
+//      index[string(word)].reserve(50000);
+//    }
     index[word].push_back(doc_id);
   }
 }
 
-const vector<ushort> &InvertedIndex::Lookup(string_view word) {
+const vector<size_t> &InvertedIndex::Lookup(string_view word) {
   if (auto it = index.find(word); it != index.end()) {
     return it->second;
   } else {

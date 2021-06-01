@@ -25,7 +25,7 @@ struct TotalDuration {
   ~TotalDuration() {
     ostringstream os;
     os << message
-       << duration_cast<microseconds>(value).count()
+       << duration_cast<milliseconds>(value).count()
        << " ms" << endl;
     cerr << os.str();
   }

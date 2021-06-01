@@ -17,12 +17,12 @@ class InvertedIndex {
 public:
   void Add(string document);
 
-  const vector<ushort> & Lookup(string_view word);
+  const vector<size_t> & Lookup(string_view word);
 
 private:
-  unordered_map<string_view, vector<ushort>> index;
+  unordered_map<string_view, vector<size_t>> index;
   deque<string> docs;
-  vector<ushort> false_vector;
+  vector<size_t> false_vector;
 };
 
 class SearchServer {
