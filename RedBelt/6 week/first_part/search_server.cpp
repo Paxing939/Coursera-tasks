@@ -9,6 +9,8 @@
 #include <iostream>
 #include <functional>
 
+//#define DEBUG
+
 vector<string_view> SplitIntoWords(string_view str, const string &delimiter) {
   size_t pos;
   vector<string_view> result;
@@ -44,54 +46,64 @@ bool operator==(const Res &lhs, const Res &rhs) {
 }
 
 void SearchServer::AddQueriesStream(istream &query_input, ostream &search_results_output) {
+#ifdef DEBUG
   TotalDuration split("split");
   TotalDuration cycle("cycle");
   TotalDuration rewrite_vector("rewrite_vector");
   TotalDuration sort("sort");
   TotalDuration out("out");
   TotalDuration free("free");
-
+#endif
 
   vector<size_t> docid_count(50000);
   vector<size_t> indexes(50000);
 
   for (string current_query; getline(query_input, current_query);) {
+#ifdef DEBUG
     {
       ADD_DURATION(split);
       const auto words = SplitIntoWords(current_query, " ");
     }
+#endif
     const auto words = SplitIntoWords(current_query, " ");
     size_t i = 0;
     {
+#ifdef DEBUG
       ADD_DURATION(cycle);
+#endif
+
       for (const auto &word : words) {
         if (!word.empty()) {
-          vector<size_t> tmp = index.Lookup(word);
-          for (const auto &doc_id : tmp) {
-            if (docid_count[doc_id] == 0) {
-              indexes[i++] = doc_id;
+          vector<pair<size_t, size_t>> tmp = index.Lookup(word);
+          if (!tmp.empty()) {
+            for (const auto &[doc_id, count] : tmp) {
+              if (docid_count[doc_id] == 0) {
+                indexes[i++] = doc_id;
+              }
+              docid_count[doc_id] += count;
             }
-            ++docid_count[doc_id];
           }
         }
       }
+
     }
 
     std::vector<std::pair<size_t, size_t>> search_result;
+    search_result.reserve(1000);
     {
+#ifdef DEBUG
       ADD_DURATION(rewrite_vector);
+#endif
       for (size_t docid = 0; docid < i; ++docid) {
-//        size_t count = 0;
-//        size_t id = 0;
-//        std::swap(count, docid_count[indexes[docid]]);
-//        std::swap(id, indexes[docid]);
         search_result.emplace_back(indexes[docid], docid_count[indexes[docid]]);
       }
     }
 
     const size_t ANSWERS_COUNT = 5;
     {
+#ifdef DEBUG
       ADD_DURATION(sort);
+#endif
       std::partial_sort(
           begin(search_result),
           begin(search_result) + min(ANSWERS_COUNT, search_result.size()),
@@ -106,7 +118,9 @@ void SearchServer::AddQueriesStream(istream &query_input, ostream &search_result
       );
     }
     {
+#ifdef DEBUG
       ADD_DURATION(out);
+#endif
       search_results_output << current_query << ':';
       for (auto[docid, hitcount] : Head(search_result, ANSWERS_COUNT)) {
         search_results_output << " {"
@@ -117,7 +131,9 @@ void SearchServer::AddQueriesStream(istream &query_input, ostream &search_result
     }
 
     {
+#ifdef DEBUG
       ADD_DURATION(free);
+#endif
       docid_count.clear();
       docid_count.resize(50000);
     }
@@ -130,15 +146,15 @@ void InvertedIndex::Add(string document) {
 
   const size_t doc_id = docs.size() - 1;
   for (const auto &word : SplitIntoWords(docs.back(), " ")) {
-    auto &t = index[word];
-//    if (t.empty()) {
-//      index[string(word)].reserve(50000);
-//    }
-    index[word].push_back(doc_id);
+    if (index[word].empty() || index[word].back().first != doc_id) {
+      index[word].emplace_back(doc_id, 1);
+    } else {
+      ++index[word].back().second;
+    }
   }
 }
 
-const vector<size_t> &InvertedIndex::Lookup(string_view word) {
+const vector<pair<size_t, size_t>> &InvertedIndex::Lookup(string_view word) {
   if (auto it = index.find(word); it != index.end()) {
     return it->second;
   } else {

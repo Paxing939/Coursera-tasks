@@ -17,8 +17,8 @@ public:
     auto finish = steady_clock::now();
     auto dur = finish - start;
     cerr << message
-         << duration_cast<microseconds>(dur).count()
-         << " ms" << endl;
+         << duration_cast<seconds>(dur).count()
+         << " s" << endl;
   }
 
 private:
