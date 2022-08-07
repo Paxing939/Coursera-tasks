@@ -33,16 +33,7 @@ void SearchServer::UpdateDocumentBase(istream &document_input) {
     new_index.Add(move(current_document));
   }
 
-  index = move(new_index);
-}
-
-struct Res {
-  int doc_id;
-  int hit_count;
-};
-
-bool operator==(const Res &lhs, const Res &rhs) {
-  return lhs.doc_id == rhs.doc_id && lhs.hit_count == rhs.hit_count;
+  index.GetAccess().ref_to_value = move(new_index);
 }
 
 void SearchServer::AddQueriesStream(istream &query_input, ostream &search_results_output) {
@@ -74,7 +65,7 @@ void SearchServer::AddQueriesStream(istream &query_input, ostream &search_result
 
       for (const auto &word : words) {
         if (!word.empty()) {
-          vector<pair<size_t, size_t>> tmp = index.Lookup(word);
+          vector<pair<size_t, size_t>> tmp = index.GetAccess().ref_to_value.Lookup(word);
           if (!tmp.empty()) {
             for (const auto &[doc_id, count] : tmp) {
               if (docid_count[doc_id] == 0) {

@@ -445,28 +445,28 @@ void TestOneWordHitsQueries() {
 }
 
 int main() {
-//  CustomDocumentsRequestsGenerator();
+  CustomDocumentsRequestsGenerator();
 
-//  TestRunner tr;
-//  RUN_TEST(tr, TestSerpFormat);
-//  RUN_TEST(tr, TestTop5);
-//  RUN_TEST(tr, TestHitcount);
-//  RUN_TEST(tr, TestRanking);
-//  RUN_TEST(tr, TestBasicSearch);
-//  RUN_TEST(tr, TestAddQueriesStream);
-//  RUN_TEST(tr, CourseraTest);
-//  RUN_TEST(tr, CourseraTest_2);
-//  RUN_TEST(tr, TestOneWordHitsQueries);
+  TestRunner tr;
+  RUN_TEST(tr, TestSerpFormat);
+  RUN_TEST(tr, TestTop5);
+  RUN_TEST(tr, TestHitcount);
+  RUN_TEST(tr, TestRanking);
+  RUN_TEST(tr, TestBasicSearch);
+  RUN_TEST(tr, TestAddQueriesStream);
+  RUN_TEST(tr, CourseraTest);
+  RUN_TEST(tr, CourseraTest_2);
+  RUN_TEST(tr, TestOneWordHitsQueries);
 
-//  RUN_TEST(tr, TestTime);
-//  RUN_TEST(tr, TestAllTime);
-//  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestAllTime);
+  RUN_TEST(tr, TestTime);
 
-//  RUN_TEST(tr, TestTime);
-//  RUN_TEST(tr, TestTime);
-//  RUN_TEST(tr, TestTime);
-//  RUN_TEST(tr, TestTime);
-//  RUN_TEST(tr, TestTime);
-//  RUN_TEST(tr, TestTime);
-//  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
+  RUN_TEST(tr, TestTime);
 }
