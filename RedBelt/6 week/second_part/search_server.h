@@ -12,8 +12,6 @@
 #include <set>
 #include <map>
 
-using namespace std;
-
 template<typename T>
 class Synchronized {
 public:
@@ -21,9 +19,9 @@ public:
 
   struct Access {
 
-    explicit Access(mutex &m, T &value) : lock(m), ref_to_value(value) {}
+    explicit Access(std::mutex &m, T &value) : lock(m), ref_to_value(value) {}
 
-    lock_guard<mutex> lock;
+    std::lock_guard<std::mutex> lock;
     T &ref_to_value;
   };
 
@@ -32,32 +30,38 @@ public:
   }
 
 private:
-  mutex m;
+  std::mutex m;
   T value;
 };
 
 class InvertedIndex {
 public:
-  void Add(string document);
+  void Add(std::string document);
 
-  const vector<pair<size_t, size_t>> & Lookup(string_view word);
+  const std::vector<std::pair<size_t, size_t>> & Lookup(std::string_view word);
 
 private:
-  unordered_map<string_view, vector<pair<size_t, size_t>>> index;
-  deque<string> docs;
-  vector<pair<size_t, size_t>> false_vector;
+  std::unordered_map<std::string_view, std::vector<std::pair<size_t, size_t>>> index;
+  std::deque<std::string> docs;
+  std::vector<std::pair<size_t, size_t>> false_vector;
 };
+
+typedef std::vector<std::vector<std::pair<size_t, size_t>>>::iterator iter;
 
 class SearchServer {
 public:
   SearchServer() = default;
 
-  explicit SearchServer(istream &document_input);
+  explicit SearchServer(std::istream &document_input);
 
-  void UpdateDocumentBase(istream &document_input);
+  void UpdateDocumentBase(std::istream &document_input);
 
-  void AddQueriesStream(istream &query_input, ostream &search_results_output);
+  void ProcessBatch(std::vector<std::string>::const_iterator queries_begin,
+                    std::vector<std::string>::const_iterator queries_end, iter search_results_begin);
+
+  void AddQueriesStream(std::istream &query_input, std::ostream &search_results_output);
 
 private:
+  const size_t ANSWERS_COUNT = 5;
   Synchronized<InvertedIndex> index;
 };

@@ -10,10 +10,6 @@
 #include <string>
 #include <chrono>
 
-
-using namespace std;
-using namespace chrono;
-
 struct TotalDuration {
   string message;
   steady_clock::duration value;
