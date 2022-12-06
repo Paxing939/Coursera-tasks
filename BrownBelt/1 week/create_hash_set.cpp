@@ -3,8 +3,20 @@
 #include <algorithm>
 #include <forward_list>
 
+using namespace std;
+
 template<typename Type, typename Hasher>
 class HashSet {
+private:
+
+  int GetIndex(Type value) const {
+    int index = hasher_(value);
+    if (index >= data_.size()) {
+      index = int(data_.size()) - 1;
+    }
+    return index;
+  }
+
 public:
   using BucketList = std::forward_list<Type>;
 
@@ -14,12 +26,16 @@ public:
 
   void Add(const Type &value) {
     if (!this->Has(value)) {
-      data_[hasher_(value)].push_front(value);
+      data_[GetIndex(value)].push_front(value);
     }
   }
 
   bool Has(const Type &value) const {
-    int index = hasher_(value);
+    if (data_.empty()) {
+      return false;
+    }
+
+    int index = this->GetIndex(value);
     if (!data_[index].empty()) {
       if (std::find(data_[index].begin(), data_[index].end(), value) != data_[index].end()) {
         return true;
@@ -29,14 +45,14 @@ public:
   }
 
   void Erase(const Type &value) {
-    int index = hasher_(value);
+    int index = GetIndex(value);
     if (!data_[index].empty()) {
       data_[index].remove(value);
     }
   }
 
   const BucketList &GetBucket(const Type &value) const {
-    return data_[hasher_(value)];
+    return data_[GetIndex(value)];
   }
 
 private:
