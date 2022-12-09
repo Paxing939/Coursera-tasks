@@ -9,4 +9,4 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address,undefined,leak")
 
-add_executable(BrownBelt "1 week/next.cpp")
+add_executable(BrownBelt "1 week/secondary_index.cpp")
