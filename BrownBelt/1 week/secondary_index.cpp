@@ -28,17 +28,27 @@ public:
 
     data_.push_back(record);
     auto it = --data_.end();
-    id_to_private_id[record.id] = it;
+
+    Node new_node;
+    new_node.data_entry = it;
+
     karma_to_private_id[record.karma].push_back(it);
+    new_node.karma_map_iterator = --karma_to_private_id[record.karma].end();
+
     timestamp_to_private_id[record.timestamp].push_back(it);
+    new_node.timestamp_map_iterator = --timestamp_to_private_id[record.timestamp].end();
+
     user_to_private_id[record.user].push_back(it);
+    new_node.user_map_iterator = --user_to_private_id[record.user].end();
+
+    id_to_private_id[record.id] = new_node;
 
     return true;
   }
 
   const Record *GetById(const string &id) const {
     if (id_to_private_id.count(id) > 0) {
-      return &(*id_to_private_id.at(id));
+      return &(*id_to_private_id.at(id).data_entry);
     } else {
       return nullptr;
     }
@@ -49,17 +59,14 @@ public:
       return false;
     }
 
-    auto it = id_to_private_id[id];
+    Node iterators_to_delete = id_to_private_id[id];
     id_to_private_id.erase(id);
 
-    std::vector<std::list<Record>::iterator> &tmp_ref = karma_to_private_id[it->karma];
-    tmp_ref.erase(std::find(tmp_ref.begin(), tmp_ref.end(), it));
+    karma_to_private_id[iterators_to_delete.data_entry->karma].erase(iterators_to_delete.karma_map_iterator);
+    timestamp_to_private_id[iterators_to_delete.data_entry->timestamp].erase(iterators_to_delete.timestamp_map_iterator);
+    user_to_private_id[iterators_to_delete.data_entry->user].erase(iterators_to_delete.user_map_iterator);
 
-    std::vector<std::list<Record>::iterator> &tmp_ref2 = timestamp_to_private_id[it->timestamp];
-    tmp_ref2.erase(std::find(tmp_ref2.begin(), tmp_ref2.end(), it));
-
-    std::vector<std::list<Record>::iterator> &tmp_ref3 = user_to_private_id[it->user];
-    tmp_ref3.erase(std::find(tmp_ref3.begin(), tmp_ref3.end(), it));
+    data_.erase(iterators_to_delete.data_entry);
 
     return true;
   }
@@ -69,7 +76,7 @@ public:
     auto lower_bound = timestamp_to_private_id.lower_bound(low),
         upper_bound = timestamp_to_private_id.upper_bound(high);
     while (lower_bound != upper_bound) {
-      for (auto it : lower_bound->second) {
+      for (auto it: lower_bound->second) {
         if (!callback(*it)) {
           return;
         }
@@ -83,7 +90,7 @@ public:
     auto lower_bound = karma_to_private_id.lower_bound(low),
         upper_bound = karma_to_private_id.upper_bound(high);
     while (lower_bound != upper_bound) {
-      for (auto it : lower_bound->second) {
+      for (auto it: lower_bound->second) {
         if (!callback(*it)) {
           return;
         }
@@ -98,7 +105,7 @@ public:
       return;
     }
 
-    for (auto it : user_to_private_id.at(user)) {
+    for (auto it: user_to_private_id.at(user)) {
       if (!callback(*it)) {
         return;
       }
@@ -107,10 +114,18 @@ public:
 
 private:
 
-  std::unordered_map<std::string, std::list<Record>::iterator> id_to_private_id;
-  std::map<int, std::vector<std::list<Record>::iterator>> karma_to_private_id;
-  std::map<int, std::vector<std::list<Record>::iterator>> timestamp_to_private_id;
-  std::unordered_map<std::string, std::vector<std::list<Record>::iterator>> user_to_private_id;
+  struct Node {
+    std::list<Record>::iterator data_entry;
+    std::list<std::list<Record>::iterator>::iterator
+        karma_map_iterator,
+        timestamp_map_iterator,
+        user_map_iterator;
+  };
+
+  std::unordered_map<std::string, Node> id_to_private_id;
+  std::map<int, std::list<std::list<Record>::iterator>> karma_to_private_id;
+  std::map<int, std::list<std::list<Record>::iterator>> timestamp_to_private_id;
+  std::unordered_map<std::string, std::list<std::list<Record>::iterator>> user_to_private_id;
   std::list<Record> data_;
 };
 
