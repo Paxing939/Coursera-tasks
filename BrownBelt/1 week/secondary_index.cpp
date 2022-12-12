@@ -1,8 +1,10 @@
 #include "test_runner.h"
 
-#include <iostream>
 #include <map>
+#include <list>
 #include <string>
+#include <iostream>
+#include <algorithm>
 #include <unordered_map>
 
 using namespace std;
@@ -18,33 +20,98 @@ struct Record {
 // Реализуйте этот класс
 class Database {
 public:
-  bool Put(const Record& record);
 
-  const Record* GetById(const string& id) const {
+  bool Put(const Record &record) {
+    if (id_to_private_id.count(record.id) > 0) {
+      return false;
+    }
+
+    data_.push_back(record);
+    auto it = --data_.end();
+    id_to_private_id[record.id] = it;
+    karma_to_private_id[record.karma].push_back(it);
+    timestamp_to_private_id[record.timestamp].push_back(it);
+    user_to_private_id[record.user].push_back(it);
+
+    return true;
+  }
+
+  const Record *GetById(const string &id) const {
     if (id_to_private_id.count(id) > 0) {
-      return &data_[id_to_private_id.at(id)];
+      return &(*id_to_private_id.at(id));
     } else {
       return nullptr;
     }
   }
 
-  bool Erase(const string& id);
+  bool Erase(const string &id) {
+    if (id_to_private_id.count(id) < 1) {
+      return false;
+    }
 
-  template <typename Callback>
-  void RangeByTimestamp(int low, int high, Callback callback) const;
+    auto it = id_to_private_id[id];
+    id_to_private_id.erase(id);
 
-  template <typename Callback>
-  void RangeByKarma(int low, int high, Callback callback) const;
+    std::vector<std::list<Record>::iterator> &tmp_ref = karma_to_private_id[it->karma];
+    tmp_ref.erase(std::find(tmp_ref.begin(), tmp_ref.end(), it));
 
-  template <typename Callback>
-  void AllByUser(const string& user, Callback callback) const;
+    std::vector<std::list<Record>::iterator> &tmp_ref2 = timestamp_to_private_id[it->timestamp];
+    tmp_ref2.erase(std::find(tmp_ref2.begin(), tmp_ref2.end(), it));
+
+    std::vector<std::list<Record>::iterator> &tmp_ref3 = user_to_private_id[it->user];
+    tmp_ref3.erase(std::find(tmp_ref3.begin(), tmp_ref3.end(), it));
+
+    return true;
+  }
+
+  template<typename Callback>
+  void RangeByTimestamp(int low, int high, Callback callback) const {
+    auto lower_bound = timestamp_to_private_id.lower_bound(low),
+        upper_bound = timestamp_to_private_id.upper_bound(high);
+    while (lower_bound != upper_bound) {
+      for (auto it : lower_bound->second) {
+        if (!callback(*it)) {
+          return;
+        }
+      }
+      lower_bound++;
+    }
+  }
+
+  template<typename Callback>
+  void RangeByKarma(int low, int high, Callback callback) const {
+    auto lower_bound = karma_to_private_id.lower_bound(low),
+        upper_bound = karma_to_private_id.upper_bound(high);
+    while (lower_bound != upper_bound) {
+      for (auto it : lower_bound->second) {
+        if (!callback(*it)) {
+          return;
+        }
+      }
+      lower_bound++;
+    }
+  }
+
+  template<typename Callback>
+  void AllByUser(const string &user, Callback callback) const {
+    if (user_to_private_id.count(user) < 1) {
+      return;
+    }
+
+    for (auto it : user_to_private_id.at(user)) {
+      if (!callback(*it)) {
+        return;
+      }
+    }
+  }
 
 private:
 
-  std::unordered_map<std::string, size_t> id_to_private_id;
-  std::map<int, size_t> karma_to_private_id;
-  std::map<std::string, size_t> user_to_private_id;
-  std::vector<Record> data_;
+  std::unordered_map<std::string, std::list<Record>::iterator> id_to_private_id;
+  std::map<int, std::vector<std::list<Record>::iterator>> karma_to_private_id;
+  std::map<int, std::vector<std::list<Record>::iterator>> timestamp_to_private_id;
+  std::unordered_map<std::string, std::vector<std::list<Record>::iterator>> user_to_private_id;
+  std::list<Record> data_;
 };
 
 void TestRangeBoundaries() {
@@ -56,7 +123,7 @@ void TestRangeBoundaries() {
   db.Put({"id2", "O>>-<", "general2", 1536107260, bad_karma});
 
   int count = 0;
-  db.RangeByKarma(bad_karma, good_karma, [&count](const Record&) {
+  db.RangeByKarma(bad_karma, good_karma, [&count](const Record &) {
     ++count;
     return true;
   });
@@ -70,7 +137,7 @@ void TestSameUser() {
   db.Put({"id2", "Rethink life", "master", 1536107260, 2000});
 
   int count = 0;
-  db.AllByUser("master", [&count](const Record&) {
+  db.AllByUser("master", [&count](const Record &) {
     ++count;
     return true;
   });
