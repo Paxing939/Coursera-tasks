@@ -1,102 +1,105 @@
 #include "json.h"
 
-Node::Node(std::vector<Node> array) : as_array(move(array)) {
-}
+namespace Json {
 
-Node::Node(std::map<std::string, Node> map) : as_map(move(map)) {
-}
+  Node::Node(std::vector<Node> array) : as_array(move(array)) {
+  }
 
-Node::Node(int value) : as_int(value) {
-}
+  Node::Node(std::map<std::string, Node> map) : as_map(move(map)) {
+  }
 
-Node::Node(std::string value) : as_string(move(value)) {
-}
+  Node::Node(int value) : as_int(value) {
+  }
 
-const std::vector<Node> &Node::AsArray() const {
-  return as_array;
-}
+  Node::Node(std::string value) : as_string(move(value)) {
+  }
 
-const std::map<std::string, Node> &Node::AsMap() const {
-  return as_map;
-}
+  const std::vector<Node> &Node::AsArray() const {
+    return as_array;
+  }
 
-int Node::AsInt() const {
-  return as_int;
-}
+  const std::map<std::string, Node> &Node::AsMap() const {
+    return as_map;
+  }
 
-const std::string &Node::AsString() const {
-  return as_string;
-}
+  int Node::AsInt() const {
+    return as_int;
+  }
 
-Document::Document(Node root) : root(std::move(root)) {
-}
+  const std::string &Node::AsString() const {
+    return as_string;
+  }
 
-const Node &Document::GetRoot() const {
-  return root;
-}
+  Document::Document(Node root) : root(std::move(root)) {
+  }
 
-Node LoadNode(std::istream &input);
+  const Node &Document::GetRoot() const {
+    return root;
+  }
 
-Node LoadArray(std::istream &input) {
-  std::vector<Node> result;
+  Node LoadNode(std::istream &input);
 
-  for (char c; input >> c && c != ']';) {
-    if (c != ',') {
-      input.putback(c);
+  Node LoadArray(std::istream &input) {
+    std::vector<Node> result;
+
+    for (char c; input >> c && c != ']';) {
+      if (c != ',') {
+        input.putback(c);
+      }
+      result.push_back(LoadNode(input));
     }
-    result.push_back(LoadNode(input));
+
+    return Node(move(result));
   }
 
-  return Node(move(result));
-}
-
-Node LoadInt(std::istream &input) {
-  int result = 0;
-  while (isdigit(input.peek())) {
-    result *= 10;
-    result += input.get() - '0';
+  Node LoadInt(std::istream &input) {
+    int result = 0;
+    while (isdigit(input.peek())) {
+      result *= 10;
+      result += input.get() - '0';
+    }
+    return Node(result);
   }
-  return Node(result);
-}
 
-Node LoadString(std::istream &input) {
-  std::string line;
-  getline(input, line, '"');
-  return Node(move(line));
-}
+  Node LoadString(std::istream &input) {
+    std::string line;
+    getline(input, line, '"');
+    return Node(move(line));
+  }
 
-Node LoadDict(std::istream &input) {
-  std::map<std::string, Node> result;
+  Node LoadDict(std::istream &input) {
+    std::map<std::string, Node> result;
 
-  for (char c; input >> c && c != '}';) {
-    if (c == ',') {
+    for (char c; input >> c && c != '}';) {
+      if (c == ',') {
+        input >> c;
+      }
+
+      std::string key = LoadString(input).AsString();
       input >> c;
+      result.insert({move(key), LoadNode(input)});
     }
 
-    std::string key = LoadString(input).AsString();
+    return Node(std::move(result));
+  }
+
+  Node LoadNode(std::istream &input) {
+    char c;
     input >> c;
-    result.insert({move(key), LoadNode(input)});
+
+    if (c == '[') {
+      return LoadArray(input);
+    } else if (c == '{') {
+      return LoadDict(input);
+    } else if (c == '"') {
+      return LoadString(input);
+    } else {
+      input.putback(c);
+      return LoadInt(input);
+    }
   }
 
-  return Node(std::move(result));
-}
-
-Node LoadNode(std::istream &input) {
-  char c;
-  input >> c;
-
-  if (c == '[') {
-    return LoadArray(input);
-  } else if (c == '{') {
-    return LoadDict(input);
-  } else if (c == '"') {
-    return LoadString(input);
-  } else {
-    input.putback(c);
-    return LoadInt(input);
+  Document Load(std::istream &input) {
+    return Document{LoadNode(input)};
   }
-}
-
-Document Load(std::istream &input) {
-  return Document{LoadNode(input)};
 }
