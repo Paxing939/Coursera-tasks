@@ -7,6 +7,15 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <unordered_map>
+
+template<typename K, typename V>
+std::ostream& operator<<(std::ostream& out, const std::unordered_map<K, V> &map) {
+  for (const auto &[key, value] : map) {
+    out << "(" << key << ", " << value << ")";
+  }
+  return out;
+}
 
 template <class T>
 std::ostream& operator << (std::ostream& os, const std::vector<T>& s) {

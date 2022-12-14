@@ -11,4 +11,4 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
 
 include_directories("./")
 
-add_executable(BrownBelt "2 week/json.cpp" "2 week/spendings_json.cpp")
+add_executable(BrownBelt "2 week/ini.cpp" "2 week/test_ini.cpp")
