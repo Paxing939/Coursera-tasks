@@ -11,5 +11,4 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
 
 include_directories("./")
 
-add_executable(BrownBelt "2 week/code_restructure/main.cpp" "2 week/code_restructure/stats_aggregator.cpp"
-        "2 week/code_restructure/stats_aggregator_test.cpp")
+add_executable(BrownBelt "2 week/comment_server.cpp")
