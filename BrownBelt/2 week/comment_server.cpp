@@ -54,7 +54,7 @@ public:
   explicit HttpResponse(HttpCode code) : code_(code) {}
 
   HttpResponse &AddHeader(string name, string value) {
-    header_ = name + " " + value;
+    header_ += name + ": " + value + "\n";
     return *this;
   }
 
@@ -89,13 +89,13 @@ ostream &operator<<(ostream &output, const HttpResponse &resp) {
       break;
   }
   output << "\n";
+  if (!resp.content_.empty()) {
+    output << "Content-Length: " << to_string(resp.content_.size()) << "\n";
+  }
   if (!resp.header_.empty()) {
     output << resp.header_;
   }
-  output << "\n";
-  if (!resp.content_.empty()) {
-    output << "\n" << resp.content_;
-  }
+  output << "\n" << resp.content_;
   return output;
 }
 
@@ -117,7 +117,7 @@ public:
       if (req.path == "/add_user") {
         comments_.emplace_back();
         auto response = to_string(comments_.size() - 1);
-        http_response.AddHeader("Content-Length:", to_string(response.size())).SetContent(response);
+        http_response.SetContent(response);
       } else if (req.path == "/add_comment") {
         auto [user_id, comment] = ParseIdAndContent(req.body);
 
@@ -130,7 +130,7 @@ public:
         if (banned_users.count(user_id) == 0) {
           comments_[user_id].push_back(string(comment));
         } else {
-          http_response.SetCode(HttpCode::Found).AddHeader("Location:", "/captcha");
+          http_response.SetCode(HttpCode::Found).AddHeader("Location", "/captcha");
         }
       } else if (req.path == "/checkcaptcha") {
         if (auto [id, response] = ParseIdAndContent(req.body); response == "42") {
@@ -139,7 +139,7 @@ public:
             last_comment.reset();
           }
         } else {
-          http_response.SetCode(HttpCode::Found).AddHeader("Location:", "/captcha");
+          http_response.SetCode(HttpCode::Found).AddHeader("Location", "/captcha");
         }
       } else {
         http_response.SetCode(HttpCode::NotFound);
@@ -152,10 +152,10 @@ public:
           response += c + '\n';
         }
 
-        http_response.AddHeader("Content-Length:", to_string(response.size())).SetContent(response);
+        http_response.SetContent(response);
       } else if (req.path == "/captcha") {
         string content = "What's the answer for The Ultimate Question of Life, the Universe, and Everything?";
-        http_response.AddHeader("Content-Length:", to_string(content.size())).SetContent(content);
+        http_response.SetContent(content);
       } else {
         http_response.SetCode(HttpCode::NotFound);
       }
@@ -265,7 +265,33 @@ void TestServer() {
   Test(cs, {"POST", "/add_uesr"}, not_found);
 }
 
+void TestHttpResponseWithHeader() {
+  stringstream ss;
+  HttpResponse http_response(HttpCode::Ok);
+  ss << http_response.AddHeader("LABEL1", "value1");
+  string s = ss.str();
+  ASSERT_EQUAL(ss.str(), "HTTP/1.1 200 OK\nLABEL1: value1\n\n")
+}
+
+void TestHttpResponse() {
+  stringstream ss;
+  HttpResponse http_response(HttpCode::Ok);
+  ss << http_response;
+  ASSERT_EQUAL(ss.str(), "HTTP/1.1 200 OK\n\n")
+}
+
+void TestHttpResponseWithContent() {
+  stringstream ss;
+  HttpResponse http_response(HttpCode::Ok);
+  http_response.SetContent("string");
+  ss << http_response;
+  ASSERT_EQUAL(ss.str(), "HTTP/1.1 200 OK\nContent-Length: 6\n\nstring")
+}
+
 int main() {
   TestRunner tr;
   RUN_TEST(tr, TestServer<CommentServer>);
+  RUN_TEST(tr, TestHttpResponse);
+  RUN_TEST(tr, TestHttpResponseWithHeader);
+  RUN_TEST(tr, TestHttpResponseWithContent);
 }
